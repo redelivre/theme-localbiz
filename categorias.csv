@@ -1,95 +1,44 @@
-A – Agropecuária, Floresta e Pesca;01 - Agropecuária
-;02 - Silvicultura e Exploração Florestal
-;03 - Pesca e Aquicultura
-B - Mineração;05 – Mineração de Carvão
-;06 – Extração de Petróleo Bruto e Gás naturl
-;07 – Mineração de Metais
-;08 – Mineração de Outros Minerais Não-Metálicos
-;09 – Atividades de Serviço de Suporte à Mineração
-C – Indústria de Transformação;10 – Fabricação de produtos alimentícios
-;11 - Fabricação de bebidas
-;12 - Fabricação de produtos do fumo
-;13 - Fabricação de tecidos
-;14 - Fabricação de confecções
-;15 - Fabricação de couro e artigos relacionados
-;16 - Fabricação de madeira e produtos de madeira, cortiça, palha e vime
-;17 - Fabricação de papel e produtos de papel
-;18 – Impressão e gravação de mídia
-;19 - Fabricação de Coque e derivados de petróleo refinado
-;20 - Fabricação de produtos químicos
-;21 - Fabricação de produtos farmacêuticos
-;22 - Fabricação de produtos de borracha e plástico
-;23 - Fabricação de produtos minerais não-metálicos
-;24 - Fabricação de metais básicos
-;25 - Fabricação de produtos de metal (exceto máquinas e equipamentos)
-;26 - Fabricação de produtos de informática, eletrônicos e óticos
-;27 - Fabricação de equipamentos eletrônicos
-;28 - Fabricação de máquinas e equipamentos mecânicos
-;29 - Fabricação de veículos automotores e reboques
-;30 - Fabricação de outros equipamentos de transporte
-;31 - Fabricação de Móveis
-;32 - Fabricação de Produtos Diversos (joias e bijuteria, instrumentos musicais, artigos esportivos, brinquedos e instrumentos e suprimentos médicos e odontológicos, vassouras e escovas)
-;33 – Reparação e instalação de máquinas e equipamentos
-E – Serviços Industriais de Utilidade Pública - SIUP;36 – Captação, tratamento e abastecimento de água
-;37 – Sistema de esgoto
-;38 – Coleta, tratamento e disposição de resíduos
-;39 – Reciclagem de resíduos
-F - Construção;40 – Construção de edificações
-;41 – Construção de obras de Engenharia (estradas, ferrovias, barragens e torres de eletricidade e telecomunicações e outros projetos)
-;43 – Atividades especializadas de construção (terraplanagem, demolição, instalações de redes elétrica, água, outras, acabamento, outras atividades especializadas)
-G - Comércio;45 – Comércio e reparação de veículos automotores e motocicletas
-;46 – Comércio atacadista
-;47 – Comércio varejista
-H – Serviços de Transporte a Armazenagem;49 – Transporte terrestre e dutos
-;50 – Transporte fluvial e marítimo
-;51 – Transporte aéreo
-;52 – Armazenamento e apoio ao transporte
-;53 – Atividades postais e de correio
-I – Serviços de Hospedagem e Alimentação;54 – Serviços de hospedagem
-;55 – Serviços de alimentação e bebidas (restaurantes, serviços móveis de alimentação, catering para eventos e outros)
-J – Serviços de Informação e Comunicação;58 – Atividades de publicação (edição e publicação de livros, periódicos, jogos eletrônicos e softwares)
-;59 – Produção de filmes, vídeos, gravação de som e edição musical
-;60 – Radiodifusão e programação de rádio e TV
-;61 - Telecomunicações
-;62 – Programação de softwares, consultoria e atividades relacionadas
-;63 – Atividades de serviços de informações (processamento de dados, hospedagem, portais da web e outros)
-K – Serviços e Atividades Financeiras;64 – Serviços bancários e de intermediação financeira
-;65 – Seguros e fundos de pensão
-;66 – Atividades auxiliares de serviços financeiros e gestão de fundos
-L – Serviços Imobiliários;68 – Atividades imobiliárias (compra e venda de imóveis, serviços de aluguéis, agências imobiliárias e gestão de imóveis)
-M – Serviços Profissionais, Científicos e Técnicos;69 – Atividades jurídicas e contábeis
-;70 – Atividades de consultoria e gestão empresarial
-;71 – Atividades de arquitetura, engenharia, testes e análises técnicas
-;72 – Pesquisa e desenvolvimento científico
-;73 – Publicidade e marketing
-;74 – Outras Atividades Profissionais Técnicas (design especializado, fotografia, tradução, outras atividades técnicas e científicas)
-;75 – Atividades veterinárias
-N – Serviços Administrativos e de Apoio Empresarial;77 – Atividades de aluguel e leasing (equipamentos, veículos, bens pessoais e domésticos e propriedade intelectual)
-;78 – Agências de emprego e intermediação de força de trabalho
-;79 – Agências de viagem e operador turístico
-;80 – Atividades de segurança e intermediação
-;81 – Serviços para edifícios e paisagismo
-;82 – Apoio administrativo e comercial (atividades combinadas de serviço administrativo e de escritório, fotocópias e documentação, call centers, organização de feiras e eventos, agências de cobrança, atividades de embalagem e outras atividades de apoio)
-O – Administração Pública, Defesa e Segurança Pública;84 – Administração pública, defesa e segurança pública
-P – Educação;85.1 – Educação pré-escolar
-;85.2 – Ensino fundamental
-;85.2 – Ensino médio
-;85.3 – Ensino superior
-;85.4 – Outras atividades de educação (educação esportiva e recreativa, formação cultural, ensino de idiomas, formação de condutores, outros)
-;85.6 – Atividades de apoio educacional
-Q – Saúde Humana e Serviços Sociais;86.1 – Serviços hospitalares
-;86.21 – Serviços médicos geral
-;86.22 – Serviços médicos especializadoo
-;86.23 – Serviços odontológicos
-;87 – Atividades de cuidados pessoais e assistência domiciliar (enfermaria, idosos e deficientes, outros)
-;88 – Assistência social sem alojamento (para idosos, deficientes e creches infantil e outros)
-R – Artes, Entretenimentos e Diversão;90 – Atividades criativas, artísticas e de entretenimento (artes performáticas, atividades de apoio às artes cênicas, criação artística, operação de instalações de artes)
-;91 – Bibliotecas, arquivos, museus e outras atividades culturais operação de locais e edifícios históricos para visitação, jardins botânicos, zoológicos e reservas naturais)
-;92 – Atividades de jogo e apostas
-;93 – Atividades esportivas e de diversão e recreação
-S – Outros Serviços;94 – Atividades de organizações associativas
-;95.1 - Reparação de computadores, periféricos e equipamentos de comunicação
-;95.2 – Reparação de bens pessoais e domésticos (bens eletrônicos de consumo, eletrodomésticos, calçados e artigos de couro, móveis e acessórios para casa, relógios e joias, outros)
-;96 – Outros serviços pessoais (limpeza, lavanderias e tinturarias, cabelereiros e centros de estética, funerárias, atividades físicas de bem-estar, outros serviços pessoais)
-T – Serviços Domésticos;97 – Empregadores Domésticos
-U – Organismos Internacionais;99 – Organismos Internacionais
+ALIMENTOS;Agricultura orgânica e agroecológica;
+;InNatura;
+;Integrais,  veganos,  funcionais,  livres de;
+;Carnes,  frios e embutidos;
+;Pescados e frutos do mar;
+;Molhos e temperos;
+;Congelados;
+;Sorvetes e gelados;
+;Panifício
+;Outros
+BEBIDAS;Fermentados
+;Destilados
+;Cerveja e Chope;
+;Água Mineral;
+;Chás e energéticos
+;Sucos, néctares e refrescos
+;Leite e achocolatados;
+;Funcionais;
+;Refrigerantes;
+;Outros;
+ECONOMIA CRIATIVA;Audiovisual
+;Arquitetura e Design;
+;Artes cênicas;
+;Editorial;
+;Expressões Culturais;
+;Moda;
+;Música;
+;Marketing e Comunicação;
+;Patrimônio e Artes;
+;Tecnologia da Informação e Comunicação ( softwares,  aplicativos, webdesign, jogos digitais);
+INDÚSTRIA (MANUFATURA);Têxtil, confecções e vestuário ( Pólo de Malha,  Jeans,  APLs, Bonés Apucarana,  por ex);
+;Perfumes e cosméticos;
+;Louças e Cerâmicas;
+;Móveis e decoração;
+;Artesanatos;
+;Couro e artigos relacionados;
+;Farmacêuticos
+;Equipamentos eletrônicos e informática
+;Óticos;
+;Casa e Jardim;
+;Limpeza doméstica e relacionados;
+;Saúde e bem-estar pessoal;
+;Reciclagem e sustentabilidade;
+ONGs e TERCEIRO SETOR;
