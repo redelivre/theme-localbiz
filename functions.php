@@ -188,8 +188,8 @@ class LocalBiz {
 		if(isset($_REQUEST['error'])) : ?>
 			<div class="row error">
 				<span class="title"><?php _e(sanitize_text_field($_REQUEST['error'])); ?></span>
-				<?php if(isset($_REQUEST['WP_Error'])) : ?>
-					<span class="hide desc"><?php _e(sanitize_text_field(print_r($_REQUEST['WP_Error']))); ?></span>
+				<?php if(isset($_REQUEST['WP_Error']) && WP_DEBUG) : ?>
+					<pre><?php var_dump($_REQUEST['WP_Error']); ?></pre>
 				<?php endif; ?>
 			</div>
 		<?php endif;
