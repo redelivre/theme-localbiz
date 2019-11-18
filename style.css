@@ -11,3 +11,437 @@
  Tags: responsive-layout, one-column, two-columns, three-columns, four-columns, left-sidebar, right-sidebar, custom-background, custom-colors, featured-images, full-width-template, post-formats, rtl-language-support, theme-options, threaded-comments, translation-ready, post-filter, business, local
  Text Domain:  localbiz
 */
+
+div.row {
+    width: 100%;
+}
+.Onboarding, .passo-2, .passo-3, .passo-4, .passo-5, .passo-6 {
+  width: 1440px;
+  height: 1024px;
+  background-color: #ffffff;
+  margin: 0 auto;
+}
+.Onboarding .row, .passo-2 .row, .passo-3 .row, .passo-4 .row, .passo-5 .row, .passo-6 .row {
+	text-align: center;
+}
+.Onboarding .row div, .passo-2 .row div, .passo-3 .row div, .passo-4 .row div, .passo-5 .row div, .passo-6 .row div {
+    display: inline-block;
+    position: relative;
+}
+.Group-30 {
+  width: 144px;
+  height: 40px;
+  object-fit: contain;
+}
+.Title-Copy {
+  width: 730px;
+  height: 31px;
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #222a41;
+}
+.Title-Copy-2 {
+  width: 540px;
+  height: 22px;
+  font-family: OpenSans;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #7e7e7e;
+}
+.Rectangle-Copy-3 {
+  width: 350px;
+  height: 76px;
+  border-radius: 8px;
+  box-shadow: -2px 3px 4px 0 rgba(0, 0, 0, 0.15);
+  background-color: #fef8ef;
+  padding-top: 1.2em;
+  margin-top: 2em;
+  margin-right: 2em;
+  cursor: pointer;
+}
+.Rectangle-img {
+  vertical-align: middle;
+}
+.Group-2-Copy-3 {
+  width: 31px;
+  height: 32px;
+  object-fit: contain;
+}
+.Title-Copy-6 {
+  width: 195px;
+  height: 62px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+}
+.Rectangle-Copy-4 {
+  width: 350px;
+  height: 76px;
+  border-radius: 8px;
+  box-shadow: -2px 3px 4px 0 rgba(0, 0, 0, 0.15);
+  background-color: #fef8ef;
+  padding-top: 1.2em;
+  margin-top: 2em;
+  margin-right: 2em;
+  cursor: pointer;
+}
+.Group-2-Copy-4 {
+  width: 31px;
+  height: 32px;
+  object-fit: contain;
+}
+.Title-Copy-7 {
+  width: 195px;
+  height: 62px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+}
+
+/* passo 2 */
+.passo-2 .Onboarding-2, .passo-3 .Onboarding-2, .passo-4 .Onboarding-2, .passo-5 .Onboarding-2 {
+  width: 1440px;
+  height: 1024px;
+  background-color: #ffffff;
+}
+.passo-2 .Rectangle-2, .passo-3 .Rectangle-2, .passo-4 .Rectangle-2, .passo-5 .Rectangle-2 {
+  width: 730px;
+  height: 136px;
+  background-color: #fef8ef;
+  padding-top: 2em;
+}
+.passo-2 .Title-Copy, .passo-3 .Title-Copy, .passo-4 .Title-Copy, .passo-5 .Title-Copy {
+  width: 288px;
+  height: 31px;
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #222a41;
+}
+.passo-2 .Oval, .passo-3 .Oval, .passo-4 .Oval, .passo-5 .Oval {
+  width: 30px;
+  height: 30px;
+  background-color: #f05822;
+  border-radius: 30px;
+  margin-top: 1em;
+}
+.passo-2 .Oval span, .passo-3 .Oval span, .passo-4 .Oval span, .passo-5 .Oval span {
+  width: 6px;
+  height: 23px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  vertical-align: middle;
+}
+.passo-2 .Oval-Copy, .passo-3 .Oval-Copy, .passo-4 .Oval-Copy, .passo-5 .Oval-Copy {
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+  border-radius: 30px;
+  margin-top: 1em;
+}
+.passo-2 .Oval-Copy span, .passo-3 .Oval-Copy span, .passo-4 .Oval-Copy span, .passo-5 .Oval-Copy span {
+  width: 11px;
+  height: 23px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #f05822;
+  vertical-align: middle;
+}
+.passo-2 .Title-Copy-2, .passo-3 .Title-Copy-2, .passo-4 .Title-Copy-2, .passo-5 .Title-Copy-2 {
+  width: 165px;
+  height: 25px;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #f05822;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+.passo-2 .title, .passo-3 .title, .passo-5 .title {
+  width: 350px;
+  height: 20px;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+  text-align: left;
+}
+.passo-2 .Rectangle {
+  width: 350px;
+  height: 42px;
+  border-radius: 6px;
+  border: solid 1px #7e7e7e;
+}
+.passo-2 .Rectangle-Copy-2, .passo-3 .Rectangle-Copy-2, .passo-4 .Rectangle-Copy-2, .passo-5 .Rectangle-Copy-2 {
+  width: 350px;
+  height: 46px;
+  border-radius: 23px;
+  background-color: #f05822;
+  cursor: pointer;
+}
+.passo-2 .Title-Copy-4, .passo-3 .Title-Copy-4, .passo-4 .Title-Copy-4, .passo-5 .Title-Copy-4 {
+  width: 351.3px;
+  height: 23px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  padding: 0.6em 0;
+}
+
+
+
+
+/* passo 3 */
+.Value {
+  width: 312.6px;
+  height: 19px;
+  font-family: OpenSans;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+}
+input.Rectangle,select.Rectangle,
+.passo-2 input.Rectangle,.passo-2 select.Rectangle,
+.passo-3 input.Rectangle,.passo-3 select.Rectangle,
+.passo-4 input.Rectangle,.passo-4 select.Rectangle,
+.passo-5 input.Rectangle,.passo-5 select.Rectangle    {
+  width: 349px;
+  height: 42px;
+  border-radius: 6px;
+  border: solid 1px #7e7e7e;
+  margin-bottom: 1em;
+}
+input.Rectangle-bairro {
+  width: 221px;
+  height: 42px;
+  border-radius: 6px;
+  border: solid 1px #7e7e7e;
+  margin-right: 1em;
+}
+input.Rectangle-numero {
+  width: 108px;
+  height: 42px;
+  border-radius: 6px;
+  border: solid 1px #7e7e7e;
+}
+input.Rectangle-estado {
+  width: 108px;
+  height: 42px;
+  border-radius: 6px;
+  border: solid 1px #7e7e7e;
+  margin-right: 1em;
+  margin-bottom: 3em;
+}
+input.Rectangle-cidade {
+  width: 222px;
+  height: 42px;
+  border-radius: 6px;
+  border: solid 1px #7e7e7e;
+}
+
+.title-bairro {
+  width: 221px;
+  height: 20px;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+  text-align: left;
+  margin-right: 1em;
+}
+.title-numero {
+  width: 108px;
+  height: 20px;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+  text-align: left;
+}
+.title-estado {
+  width: 108px;
+  height: 20px;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+  text-align: left;
+  margin-right: 1em;
+}
+.title-cidade {
+  width: 222px;
+  height: 20px;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+  text-align: left;
+}
+.title-endereco, .title-complemento {
+	margin-top: 1em;
+}
+
+/* passo 4 */
+.passo-4 .Lorem-Ipsum {
+  width: 250px;
+  height: 19px;
+  font-family: OpenSans;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #f05822;
+}
+
+.passo-4 .Seu-negcio-possui-f {
+  width: 350px;
+  height: 19px;
+  font-family: OpenSans;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+}
+.passo-4 .Title-Copy-2 {
+  width: 287px;
+  height: 25px;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #f05822;
+}
+
+/* passo 5 */
+.passo-5 .Title-Copy-2 {
+  width: 287px;
+  height: 25px;
+  font-family: Poppins;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #f05822;
+}
+
+/* passo 6 */
+.passo-6 .Cadastro-Efetuado {
+  width: 1440px;
+  height: 1024px;
+  background-color: #ffffff;
+}
+.passo-6 .Rectangle {
+  width: 729px;
+  height: 697px;
+  background-color: #fef8ef;
+  margin: auto;
+  padding-top: 15em;
+}
+.passo-6 .noun_Check_1934251 {
+  width: 93px;
+  height: 93px;
+  object-fit: contain;
+}
+.passo-6 .Title-Copy-2 {
+  width: 225px;
+  height: 50px;
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.14;
+  letter-spacing: normal;
+  text-align: center;
+  color: #f05822;
+}
+
+.hide {
+	display: none;
+}
