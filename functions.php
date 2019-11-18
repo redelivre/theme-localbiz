@@ -125,7 +125,7 @@ class LocalBiz {
 	}
 	
 	public function create_terms() {
-		if(!term_exists('A – Agropecuária, Floresta e Pesca', 'category') ) {
+		if(!term_exists('Outros', 'category') ) {
 			/*$new_cat = array( 'cat_name' => 'A – Agropecuária, Floresta e Pesca', 'category_description' => '', 'category_parent' => '' );
 			$cat_id = wp_insert_category($new_cat);
 			
@@ -138,10 +138,12 @@ class LocalBiz {
 					if(!empty($line[0])) {
 						$new_cat = array( );
 						$cat_id = wp_insert_term($line[0], 'category', $new_cat);
+						if($cat_id instanceof WP_Error) wp_die($cat_id);
 					}
 					if(!empty($line[1]) && !is_null($new_cat)) {
 						$new_subcat = array( 'parent' => $cat_id['term_id'] );
 						$subcat_id = wp_insert_term($line[1], 'category', $new_subcat);
+						if($subcat_id instanceof WP_Error) wp_die($subcat_id);
 					}
 				}
 				fclose($file);
