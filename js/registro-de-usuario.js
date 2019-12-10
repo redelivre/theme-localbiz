@@ -31,6 +31,9 @@ jQuery(document).ready(function(){
             catchangeaction();
         }
     }
+    jQuery('#tem_cnpj').click(function() {
+        jQuery("#cnpj").prop('disabled',  this.checked);
+    });
 });
 function catchangeaction() {
     var parentCat=jQuery( '#cat').val();

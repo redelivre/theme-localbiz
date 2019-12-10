@@ -15,16 +15,16 @@
 div.row {
     width: 100%;
 }
-.Onboarding, .passo-2, .passo-3, .passo-4, .passo-5, .passo-6 {
-  width: 1440px;
+.Onboarding, .passo-2, .passo-3, .passo-4, .passo-5, .passo-6, .passo-7 {
+  width: 100%;
   height: 1024px;
   background-color: #ffffff;
   margin: 0 auto;
 }
-.Onboarding .row, .passo-2 .row, .passo-3 .row, .passo-4 .row, .passo-5 .row, .passo-6 .row {
+.Onboarding .row, .passo-2 .row, .passo-3 .row, .passo-4 .row, .passo-5 .row, .passo-6 .row, .passo-7 .row {
 	text-align: center;
 }
-.Onboarding .row div, .passo-2 .row div, .passo-3 .row div, .passo-4 .row div, .passo-5 .row div, .passo-6 .row div {
+.Onboarding .row div, .passo-2 .row div, .passo-3 .row div, .passo-4 .row div, .passo-5 .row div, .passo-6 .row div, .passo-7 .row div {
     display: inline-block;
     position: relative;
 }
@@ -32,9 +32,10 @@ div.row {
   width: 144px;
   height: 40px;
   object-fit: contain;
+  margin: 3em 0 1em 0;
 }
 .Title-Copy {
-  width: 730px;
+  max-width: 730px;
   height: 31px;
   font-family: Poppins;
   font-size: 22px;
@@ -47,7 +48,7 @@ div.row {
   color: #222a41;
 }
 .Title-Copy-2 {
-  width: 540px;
+  max-width: 540px;
   height: 22px;
   font-family: OpenSans;
   font-size: 16px;
@@ -120,18 +121,19 @@ div.row {
 }
 
 /* passo 2 */
-.passo-2 .Onboarding-2, .passo-3 .Onboarding-2, .passo-4 .Onboarding-2, .passo-5 .Onboarding-2 {
-  width: 1440px;
+.passo-2 .Onboarding-2, .passo-3 .Onboarding-2, .passo-4 .Onboarding-2, .passo-5 .Onboarding-2, .passo-6 .Onboarding-2, .passo-7 .Onboarding-2 {
+  width: 100%;
   height: 1024px;
   background-color: #ffffff;
 }
-.passo-2 .Rectangle-2, .passo-3 .Rectangle-2, .passo-4 .Rectangle-2, .passo-5 .Rectangle-2 {
-  width: 730px;
+.passo-2 .Rectangle-2, .passo-3 .Rectangle-2, .passo-4 .Rectangle-2, .passo-5 .Rectangle-2, .passo-6 .Rectangle-2, .passo-7 .Rectangle-2 {
+  width: 80%;
+  max-width: 730px;
   height: 136px;
   background-color: #fef8ef;
   padding-top: 2em;
 }
-.passo-2 .Title-Copy, .passo-3 .Title-Copy, .passo-4 .Title-Copy, .passo-5 .Title-Copy {
+.passo-2 .Title-Copy, .passo-3 .Title-Copy, .passo-4 .Title-Copy, .passo-5 .Title-Copy, .passo-6 .Title-Copy, .passo-7 .Title-Copy {
   width: 288px;
   height: 31px;
   font-family: Poppins;
@@ -144,14 +146,14 @@ div.row {
   text-align: center;
   color: #222a41;
 }
-.passo-2 .Oval, .passo-3 .Oval, .passo-4 .Oval, .passo-5 .Oval {
+.passo-2 .Oval, .passo-3 .Oval, .passo-4 .Oval, .passo-5 .Oval, .passo-6 .Oval, .passo-7 .Oval {
   width: 30px;
   height: 30px;
   background-color: #f05822;
   border-radius: 30px;
   margin-top: 1em;
 }
-.passo-2 .Oval span, .passo-3 .Oval span, .passo-4 .Oval span, .passo-5 .Oval span {
+.passo-2 .Oval span, .passo-3 .Oval span, .passo-4 .Oval span, .passo-5 .Oval span, .passo-6 .Oval span, .passo-7 .Oval span {
   width: 6px;
   height: 23px;
   font-family: Poppins;
@@ -165,14 +167,14 @@ div.row {
   color: #ffffff;
   vertical-align: middle;
 }
-.passo-2 .Oval-Copy, .passo-3 .Oval-Copy, .passo-4 .Oval-Copy, .passo-5 .Oval-Copy {
+.passo-2 .Oval-Copy, .passo-3 .Oval-Copy, .passo-4 .Oval-Copy, .passo-5 .Oval-Copy, .passo-6 .Oval-Copy, .passo-7 .Oval-Copy {
   width: 30px;
   height: 30px;
   background-color: #ffffff;
   border-radius: 30px;
   margin-top: 1em;
 }
-.passo-2 .Oval-Copy span, .passo-3 .Oval-Copy span, .passo-4 .Oval-Copy span, .passo-5 .Oval-Copy span {
+.passo-2 .Oval-Copy span, .passo-3 .Oval-Copy span, .passo-4 .Oval-Copy span, .passo-5 .Oval-Copy span, .passo-6 .Oval-Copy span, .passo-7 .Oval-Copy span {
   width: 11px;
   height: 23px;
   font-family: Poppins;
@@ -186,7 +188,7 @@ div.row {
   color: #f05822;
   vertical-align: middle;
 }
-.passo-2 .Title-Copy-2, .passo-3 .Title-Copy-2, .passo-4 .Title-Copy-2, .passo-5 .Title-Copy-2 {
+.passo-2 .Title-Copy-2, .passo-3 .Title-Copy-2, .passo-4 .Title-Copy-2, .passo-5 .Title-Copy-2, .passo-6 .Title-Copy-2, .passo-7 .Title-Copy-2 {
   width: 165px;
   height: 25px;
   font-family: Poppins;
@@ -201,7 +203,7 @@ div.row {
   margin-top: 2em;
   margin-bottom: 1em;
 }
-.passo-2 .title, .passo-3 .title, .passo-5 .title {
+.passo-2 .title, .passo-3 .title, .passo-5 .title, .passo-6 .title, .passo-7 .title {
   width: 350px;
   height: 20px;
   font-family: Poppins;
@@ -220,14 +222,14 @@ div.row {
   border-radius: 6px;
   border: solid 1px #7e7e7e;
 }
-.passo-2 .Rectangle-Copy-2, .passo-3 .Rectangle-Copy-2, .passo-4 .Rectangle-Copy-2, .passo-5 .Rectangle-Copy-2 {
+.passo-2 .Rectangle-Copy-2, .passo-3 .Rectangle-Copy-2, .passo-4 .Rectangle-Copy-2, .passo-5 .Rectangle-Copy-2, .passo-6 .Rectangle-Copy-2, .passo-7 .Rectangle-Copy-2 {
   width: 350px;
   height: 46px;
   border-radius: 23px;
   background-color: #f05822;
   cursor: pointer;
 }
-.passo-2 .Title-Copy-4, .passo-3 .Title-Copy-4, .passo-4 .Title-Copy-4, .passo-5 .Title-Copy-4 {
+.passo-2 .Title-Copy-4, .passo-3 .Title-Copy-4, .passo-4 .Title-Copy-4, .passo-5 .Title-Copy-4, .passo-5 .Title-Copy-6, .passo-5 .Title-Copy-7 {
   width: 351.3px;
   height: 23px;
   font-family: Poppins;
@@ -262,7 +264,9 @@ input.Rectangle,select.Rectangle,
 .passo-2 input.Rectangle,.passo-2 select.Rectangle,
 .passo-3 input.Rectangle,.passo-3 select.Rectangle,
 .passo-4 input.Rectangle,.passo-4 select.Rectangle,
-.passo-5 input.Rectangle,.passo-5 select.Rectangle    {
+.passo-5 input.Rectangle,.passo-4 select.Rectangle,
+.passo-6 input.Rectangle,.passo-4 select.Rectangle,
+.passo-7 input.Rectangle,.passo-5 select.Rectangle    {
   width: 349px;
   height: 42px;
   border-radius: 6px;
@@ -395,6 +399,16 @@ input.Rectangle-cidade {
   color: #f05822;
 }
 
+.passo-4 .retangle-left {
+	width: 350px;
+	margin: 0 auto;
+}
+
+.passo-4 .retangle-left .row {
+	text-align: left;
+	margin-bottom: 1em;
+}
+
 /* passo 5 */
 .passo-5 .Title-Copy-2 {
   width: 287px;
@@ -410,25 +424,137 @@ input.Rectangle-cidade {
   color: #f05822;
 }
 
+.passo-5 .Check-box-vazio {
+	text-align: left;
+	width: 350px;
+	margin-bottom: 1em;
+}
+
+.passo-5 .Check-box-vazio label {
+  width: 250px;
+  height: 19px;
+  font-family: OpenSans;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #f05822;
+}
+
+.passo-5 .Check-box-vazio input {
+	vertical-align: middle;
+}
+
+.passo-5 #cnpj {
+	margin-bottom: 0;
+}
+
 /* passo 6 */
-.passo-6 .Cadastro-Efetuado {
-  width: 1440px;
+.passo-6 .Title-Copy {
+  width: 275px;
+  height: 31px;
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #222a41;
+}
+.passo-6 .Title-Copy-3 {
+  width: 150px;
+  height: 23px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+}
+.passo-6 .title {
+  width: 280px;
+  height: 20px;
+  font-family: Poppins;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #222a41;
+}
+.passo-6 .-Value {
+  width: 240px;
+  height: 19px;
+  font-family: OpenSans;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #838383;
+}
+.passo-6 .Rectangle-Copy-2 {
+  width: 240px;
+  height: 40px;
+  border-radius: 23px;
+  background-color: #2294f0;
+}
+.passo-6 .Title-Copy-4 {
+  width: 240px;
+  height: 23px;
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}
+.passo-6 .img-Oval {
+  width: 80px;
+  height: 80px;
+  background-color: #ffd4c5;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 100%;
+}
+.passo-6 .img-Oval img {
+  width: 24px;
+  height: 19.2px;
+  object-fit: contain;
+  background-color: #f05822;
+}
+
+/* passo 7 */
+.passo-7 .Cadastro-Efetuado {
+  width: 100%;
   height: 1024px;
   background-color: #ffffff;
 }
-.passo-6 .Rectangle {
+.passo-7 .Rectangle {
   width: 729px;
   height: 697px;
   background-color: #fef8ef;
   margin: auto;
   padding-top: 15em;
 }
-.passo-6 .noun_Check_1934251 {
+.passo-7 .noun_Check_1934251 {
   width: 93px;
   height: 93px;
   object-fit: contain;
 }
-.passo-6 .Title-Copy-2 {
+.passo-7 .Title-Copy-2 {
   width: 225px;
   height: 50px;
   font-family: Poppins;
@@ -444,4 +570,12 @@ input.Rectangle-cidade {
 
 .hide {
 	display: none;
+}
+
+.localbiz-custom-register #main-header {
+    display: none;
+}
+
+.localbiz-custom-register #page-container {
+	padding-top: 0 !important;
 }

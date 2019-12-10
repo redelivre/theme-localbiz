@@ -1,3 +1,13 @@
+<?php
+	function submit_template() {?>
+		<div class="row">
+			<div class="Rectangle-Copy-2" onclick="submitpasso2();">
+				<div class="Title-Copy-4">Continuar</div>
+			</div>
+			<button id="submit" type="submit" class="hide"></button>
+		</div><?php
+	}
+?>
 <?php do_action( 'before_signup_form' ); ?>
 
 <?php
@@ -79,6 +89,9 @@
 									<div class="Oval-Copy">
 										<span>4</span>
 									</div>
+									<div class="Oval-Copy">
+										<span>5</span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -99,15 +112,15 @@
 							<div class="row">
 								<input type="text" name="nome-negocio" class="Rectangle" value="<?php echo array_key_exists('nome-negocio', $_REQUEST) ? sanitize_text_field($_REQUEST['nome-negocio']) : ''; ?>" required />
 							</div>
+							<div class="row">
+								<div class="title">
+									Nome do Responsável
+								</div>
+							</div>
+							<div class="row">
+								<input type="text" name="nome-responsavel" class="Rectangle" value="<?php echo array_key_exists('nome-responsavel', $_REQUEST) ? sanitize_text_field($_REQUEST['nome-responsavel']) : ''; ?>" required />
+							</div>
 							<?php if(! is_user_logged_in() ) : ?>
-								<div class="row">
-									<div class="title">
-										Nome do Responsável
-									</div>
-								</div>
-								<div class="row">
-									<input type="text" name="nome-responsavel" class="Rectangle" value="<?php echo array_key_exists('nome-responsavel', $_REQUEST) ? sanitize_text_field($_REQUEST['nome-responsavel']) : ''; ?>" required />
-								</div>
 								<div class="row">
 									<div class="title">
 										Email do Responsável
@@ -145,12 +158,7 @@
 									</div>
 								<?php endif; ?>
 							<?php endif; ?>
-							<div class="row">
-								<div class="Rectangle-Copy-2">
-									<div class="Title-Copy-4" onclick="submitpasso2();" >Continuar</div>
-									<button id="submit" type="submit" class="hide"></button>
-								</div>
-							</div>
+							<?php submit_template(); ?>
 						</form>
 					</div>
 				</div><?php
@@ -178,14 +186,21 @@
 					do_action('wp_login', $wpuser->user_login, $wpuser);
 				} else {
 					$_REQUEST['estagio'] = 2;
-					$_REQUEST['error'] = 'Email já cadastrado ou senha inválida';
+					$_REQUEST['error'] = 'Email já cadastrado e/ou senha inválida';
 					$_REQUEST['WP_Error'] = $wpuser;
 					$url = '/registro-de-usuario' . '?' . http_build_query($_REQUEST);
 					wp_redirect($url);
 				}
 			} else {
-				$username = substr($email, 0, strpos($email, '@'));
+				$username_base = substr($email, 0, strpos($email, '@'));
+				$username = $username_base;
+				$sulfix = 0;
+				while (username_exists($username) && $sulfix < 20) {
+					$sulfix++;
+					$username = $username_base.'-'.$sulfix;
+				}
 				$wp_user_id = wp_create_user($username, $password, $email);
+				wp_update_user( array( 'ID' => $wp_user_id, 'display_name' => sanitize_title($_REQUEST['nome-responsavel'])));
 				if(is_int($wp_user_id)) {
 					$wpuser = wp_set_current_user($wp_user_id);
 					wp_set_auth_cookie($wpuser->ID);
@@ -227,6 +242,8 @@
 				$post['post_type'] = 'localbiz';
 				$post['post_status'] = 'pending';
 				$post_id = wp_insert_post($post);
+				update_post_meta($post_id, 'nome-responsavel', sanitize_title($_REQUEST['nome-responsavel']));
+				update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
 			}
 			$_REQUEST['post_id'] = $post_id; ?>
 			<div class="passo-3">
@@ -254,6 +271,9 @@
 								</div>
 								<div class="Oval-Copy">
 									<span>4</span>
+								</div>
+								<div class="Oval-Copy">
+									<span>5</span>
 								</div>
 							</div>
 						</div>
@@ -316,12 +336,7 @@
 							<input name="estado" id="estado" class="Rectangle-estado" data-autocomplete-state required>
 							<input name="cidade" id="cidade" class="Rectangle-cidade" data-autocomplete-city required>
 						</div>
-						<div class="row">
-							<div class="Rectangle-Copy-2">
-								<div class="Title-Copy-4" onclick="submitpasso2();" >Continuar</div>
-								<button id="submit" type="submit" class="hide"></button>
-							</div>
-						</div>
+						<?php submit_template(); ?>
 					</form>
 				</div>
 			</div>
@@ -346,6 +361,7 @@
 				update_post_meta($post_id, 'complemento', sanitize_text_field($_REQUEST['complemento']));
 				update_post_meta($post_id, 'estado', sanitize_text_field($_REQUEST['estado']));
 				update_post_meta($post_id, 'cidade', sanitize_text_field($_REQUEST['cidade']));
+				update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
 			}
 		?>
 			<div class="passo-4">
@@ -374,6 +390,9 @@
 								<div class="Oval-Copy">
 									<span>4</span>
 								</div>
+								<div class="Oval-Copy">
+									<span>5</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -387,54 +406,51 @@
 								Tipo e tamanho do seu negócio
 							</div>
 						</div>
-						<div class="row">
-							<div class="Seu-negcio-possui-f">
-								Seu negócio possui fins lucrativos?
+						<div class="retangle-left">
+							<div class="row">
+								<div class="Seu-negcio-possui-f">
+									Seu negócio possui fins lucrativos?
+								</div>
+							</div>
+							<div class="row">
+								<input type="radio" id="fins-sim" name="fins" value="sim" <?php echo array_key_exists('fins', $_REQUEST) && sanitize_text_field($_REQUEST['fins']) == 'sim' ? 'checked="checked"' : ''; ?> />
+									<label class="Lorem-Ipsum" for="fins-sim">Sim, possui fins lucrativos.</label>
+							</div>
+							<div class="row">
+								<input type="radio" id="fins-nao" name="fins" value="nao" <?php echo array_key_exists('fins', $_REQUEST) && sanitize_text_field($_REQUEST['fins']) == 'nao' ? 'checked="checked"' : ''; ?> />
+									<label class="Lorem-Ipsum" for="fins-nao">Não possui fins lucrativos.</label>
+							</div>
+							<div class="row">
+								<div class="Qual-o-tamanho-do">
+									Qual é o tamanho do seu negócio?
+								</div>
+							</div>
+							<div class="row">
+								<input type="radio" id="tamanho-individual" name="tamanho" value="Individual" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == 'Individual' ? 'checked="checked"' : ''; ?> />
+									<label class="Lorem-Ipsum" for="tamanho-individual">Individual</label>
+							</div>
+							<div class="row">
+								<input type="radio" id="tamanho-4" name="tamanho" value="4" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == '4' ? 'checked="checked"' : ''; ?> />
+									<label class="Lorem-Ipsum" for="tamanho-4">1 - 4 Funcionários</label>
+							</div>
+							<div class="row">
+								<input type="radio" id="tamanho-5" name="tamanho" value="5" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == '5' ? 'checked="checked"' : ''; ?> />
+									<label class="Lorem-Ipsum" for="tamanho-5">5 - 10 Funcionários</label>
+							</div>
+							<div class="row">
+								<input type="radio" id="tamanho-11" name="tamanho" value="11" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == '11' ? 'checked="checked"' : ''; ?> />
+									<label class="Lorem-Ipsum" for="tamanho-11">11 - 20 Funcionários</label>
+							</div>
+							<div class="row">
+								<input type="radio" id="tamanho-21" name="tamanho" value="21" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == '21' ? 'checked="checked"' : ''; ?> />
+									<label class="Lorem-Ipsum" for="tamanho-21">21 - 50 Funcionários</label>
+							</div>
+							<div class="row">
+								<input type="radio" id="tamanho-mais" name="tamanho" value="mais" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == 'mais' ? 'checked="checked"' : ''; ?> />
+									<label class="Lorem-Ipsum" for="tamanho-mais">Mais de 50 Funcionários</label>
 							</div>
 						</div>
-						<div class="row">
-							<input type="radio" id="fins-sim" name="fins" value="sim" <?php echo array_key_exists('fins', $_REQUEST) && sanitize_text_field($_REQUEST['fins']) == 'sim' ? 'checked="checked"' : ''; ?> />
-								<label class="Lorem-Ipsum" for="fins-sim">Sim, possui fins lucrativos.</label>
-						</div>
-						<div class="row">
-							<input type="radio" id="fins-nao" name="fins" value="nao" <?php echo array_key_exists('fins', $_REQUEST) && sanitize_text_field($_REQUEST['fins']) == 'nao' ? 'checked="checked"' : ''; ?> />
-								<label class="Lorem-Ipsum" for="fins-nao">Não possui fins lucrativos.</label>
-						</div>
-						<div class="row">
-							<div class="Qual-o-tamanho-do">
-								Qual é o tamanho do seu negócio?
-							</div>
-						</div>
-						<div class="row">
-							<input type="radio" id="tamanho-individual" name="tamanho" value="Individual" <?php echo array_key_exists('fins', $_REQUEST) && sanitize_text_field($_REQUEST['fins']) == 'sim' ? 'checked="checked"' : ''; ?> />
-								<label class="Lorem-Ipsum" for="tamanho-individual">Individual</label>
-						</div>
-						<div class="row">
-							<input type="radio" id="tamanho-4" name="tamanho" value="4" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == '4' ? 'checked="checked"' : ''; ?> />
-								<label class="Lorem-Ipsum" for="tamanho-4">1 - 4 Funcionários</label>
-						</div>
-						<div class="row">
-							<input type="radio" id="tamanho-5" name="tamanho" value="5" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == '5' ? 'checked="checked"' : ''; ?> />
-								<label class="Lorem-Ipsum" for="tamanho-5">5 - 10 Funcionários</label>
-						</div>
-						<div class="row">
-							<input type="radio" id="tamanho-11" name="tamanho" value="11" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == '11' ? 'checked="checked"' : ''; ?> />
-								<label class="Lorem-Ipsum" for="tamanho-11">11 - 20 Funcionários</label>
-						</div>
-						<div class="row">
-							<input type="radio" id="tamanho-21" name="tamanho" value="21" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == '21' ? 'checked="checked"' : ''; ?> />
-								<label class="Lorem-Ipsum" for="tamanho-21">21 - 50 Funcionários</label>
-						</div>
-						<div class="row">
-							<input type="radio" id="tamanho-mais" name="tamanho" value="mais" <?php echo array_key_exists('tamanho', $_REQUEST) && sanitize_text_field($_REQUEST['tamanho']) == 'mais' ? 'checked="checked"' : ''; ?> />
-								<label class="Lorem-Ipsum" for="tamanho-mais">Mais de 50 Funcionários</label>
-						</div>
-						<div class="row">
-							<div class="Rectangle-Copy-2">
-								<div class="Title-Copy-4" onclick="submitpasso2();" >Continuar</div>
-								<button id="submit" type="submit" class="hide"></button>
-							</div>
-						</div>
+						<?php submit_template(); ?>
 					</form>
 				</div>
 			</div>
@@ -452,6 +468,7 @@
 					$post_id = sanitize_text_field($_REQUEST['post_id']);
 					update_post_meta($post_id, 'fins', sanitize_text_field($_REQUEST['fins']));
 					update_post_meta($post_id, 'tamanho', sanitize_text_field($_REQUEST['tamanho']));
+					update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
 			}
 			?>
 			<div class="passo-5">
@@ -480,6 +497,105 @@
 								<div class="Oval">
 									<span>4</span>
 								</div>
+								<div class="Oval-Copy">
+									<span>5</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<form class="localbiz_registerform" id="localbiz_registerform2">
+						<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
+						<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/>
+						<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : '' ?>"/>
+						<input type="hidden" id="post_id" name="post_id" value="<?php echo array_key_exists('post_id', $_REQUEST) ? sanitize_text_field( $_REQUEST['post_id'] ) : '' ?>"/>
+						<div class="row">
+							<div class="Title-Copy-2">
+								Identificando o Seu Negócio Local
+							</div>
+						</div>
+						<div class="row">
+							<div class="title">
+								CNPJ
+							</div>
+						</div>
+						<div class="row">
+							<input name="cnpj" id="cnpj"  class="Rectangle" value="<?php echo array_key_exists('cnpj', $_REQUEST) ? sanitize_text_field($_REQUEST['cnpj']) : ''; ?>" required="required" >
+						</div>
+						<div class="row">
+							<div class="Check-box-vazio">
+								<input type="checkbox" name="tem_cnpj" id="tem_cnpj" class="" value="N" >
+								<label for="tem_cnpj">Ainda não possuo CNPJ</label>
+							</div>
+							<input type="checkbox" name="tem_cnpj" id="tem_cnpj_sim" class="hide" value="S" checked="checked" >
+						</div>
+						<div class="row">
+							<div class="title">
+								Razão Social
+							</div>
+						</div>
+						<div class="row">
+							<input name="razao" id="razao"  class="Rectangle" value="<?php echo array_key_exists('razao', $_REQUEST) ? sanitize_text_field($_REQUEST['razao']) : ''; ?>" required="required" >
+						</div><?php
+						LocalBiz::category_subcategory_select_form();?>
+						<?php submit_template(); ?>
+					</form>
+				</div>
+			</div><?php
+		}
+	break;
+	case 6:
+		if(is_user_logged_in()) {
+			if(
+				isset($_REQUEST['post_id']) &&
+				LocalBiz::check_post_owner($_REQUEST['post_id']) &&
+				( isset($_REQUEST['cnpj']) || 'S' == sanitize_text_field($_REQUEST['tem_cnpj']) ) &&
+				isset($_REQUEST['razao']) &&
+				isset($_REQUEST['tem_cnpj'])
+			) {
+				$post_id = sanitize_text_field($_REQUEST['post_id']);
+				$tem_cnpj = sanitize_text_field($_REQUEST['tem_cnpj']);
+				if($tem_cnpj == 'S') {
+					update_post_meta($post_id, 'cnpj', sanitize_text_field($_REQUEST['cnpj']));
+				}
+				update_post_meta($post_id, 'tem_cnpj', $tem_cnpj);
+				update_post_meta($post_id, 'razao', sanitize_text_field($_REQUEST['razao']));
+				update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
+				$cat_id = isset($_REQUEST['cat']) && !empty($_REQUEST['cat']) ? sanitize_text_field($_REQUEST['cat']) : -1;
+				$subcat_id = isset($_REQUEST['subcat']) && !empty($_REQUEST['subcat']) ? sanitize_text_field($_REQUEST['subcat']) : -1;
+				$cats = array();
+				if($cat_id > 0) $cats[] = $cat_id;
+				if($subcat_id > 0) $cats[] = $subcat_id;
+				if(!empty($cats)) wp_set_post_terms($post_id, $cats, 'category');
+			}?>
+			<div class="passo-6">
+				<div class="Onboarding-2">
+					<div class="row">
+						<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
+					</div>
+					<?php LocalBiz::display_error(); ?>
+					<div class="row">
+						<div class="Rectangle-2">
+							<div class="row">
+								<div class="Title-Copy">
+									Cadastrando seu negócio
+								</div>
+							</div>
+							<div class="row">
+								<div class="Oval-Copy">
+									<span>1</span>
+								</div>
+								<div class="Oval-Copy">
+									<span>2</span>
+								</div>
+								<div class="Oval-Copy">
+									<span>3</span>
+								</div>
+								<div class="Oval-Copy">
+									<span>4</span>
+								</div>
+								<div class="Oval">
+									<span>5</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -494,52 +610,67 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="title">
-								CNPJ
+							<div class="Title-Copy-2">
+								<?php echo sanitize_text_field($_REQUEST['razao']); ?>
 							</div>
 						</div>
 						<div class="row">
-							<input name="cnpj" id="cnpj"  class="Rectangle" value="<?php echo array_key_exists('cnpj', $_REQUEST) ? sanitize_text_field($_REQUEST['cnpj']) : ''; ?>" >
+							<tr class="form-field term-group-wrap">
+								<th scope="row"><label for="localbiz-perfil-image-id"><?php _e( 'Imagem', 'localbiz' ); ?></label>
+								</th>
+								<td>
+									<?php $image_id = get_term_meta ( $post_id, 'localbiz-perfil-image-id', true ); ?>
+									<input type="hidden" id="localbiz-perfil-image-id"
+										name="localbiz-perfil-image-id" value="<?php echo $image_id; ?>">
+									<?php if ( $image_id ) {
+										$imgurl = wp_get_attachment_image_src ( $image_id, 'thumbnail' );
+									} else {
+										$imgurl = get_stylesheet_directory_uri().'/img/invalid-name.svg';
+									} ?>
+									<div id="localbiz-perfil-image-wrapper" class="img-Oval" style="background-image: url('<?php echo $imgurl; ?>');">
+									</div>
+									<p>
+										<input type="button"
+											class="button button-secondary ct_tax_media_button"
+											id="ct_tax_media_button" name="ct_tax_media_button"
+											value="<?php _e( 'Adicionar Imagem', 'localbiz' ); ?>" /> <input
+											type="button" class="button button-secondary ct_tax_media_remove"
+											id="ct_tax_media_remove" name="ct_tax_media_remove"
+											value="<?php _e( 'Remover Imagem', 'localbiz' ); ?>" />
+									</p>
+								</td>
+							</tr>
 						</div>
-						<div class="row">
-							<div class="title">
-								Razão Social
-							</div>
-						</div>
-						<div class="row">
-							<input name="razao" id="razao"  class="Rectangle" value="<?php echo array_key_exists('razao', $_REQUEST) ? sanitize_text_field($_REQUEST['razao']) : ''; ?>"  >
-						</div><?php
-						LocalBiz::category_subcategory_select_form();?>
-						<div class="row">
-							<div class="Rectangle-Copy-2">
-								<div class="Title-Copy-4" onclick="submitpasso2();" >Continuar</div>
-								<button id="submit" type="submit" class="hide"></button>
-							</div>
-						</div>
+						<?php submit_template(); ?>
 					</form>
 				</div>
 			</div><?php
 		}
 	break;
-	case 6:
+	case 7:
 		if(is_user_logged_in()) {
 			if(
 				isset($_REQUEST['post_id']) &&
 				LocalBiz::check_post_owner($_REQUEST['post_id']) &&
-				isset($_REQUEST['cnpj']) &&
+				( isset($_REQUEST['cnpj']) || 'S' == sanitize_text_field($_REQUEST['tem_cnpj']) ) &&
 				isset($_REQUEST['razao'])
-			) {
-				$post_id = sanitize_text_field($_REQUEST['post_id']);
-				update_post_meta($post_id, 'cnpj', sanitize_text_field($_REQUEST['cnpj']));
-				update_post_meta($post_id, 'razao', sanitize_text_field($_REQUEST['razao']));
-				$cat_id = isset($_REQUEST['cat']) ? sanitize_text_field($_REQUEST['cat']) : -1;
-				$subcat_id = isset($_REQUEST['subcat']) ? sanitize_text_field($_REQUEST['subcat']) : -1;
-				$cats = array();
-				if($cat_id > 0) $cats[] = $cat_id;
-				if($subcat_id > 0) $cats[] = $subcat_id;
-				if(!empty($cats)) wp_set_post_terms($post_id, $cats, 'category');
+				) {
+					$post_id = sanitize_text_field($_REQUEST['post_id']);
+					$tem_cnpj = sanitize_text_field($_REQUEST['tem_cnpj']);
+					if($tem_cnpj == 'S') {
+						update_post_meta($post_id, 'cnpj', sanitize_text_field($_REQUEST['cnpj']));
+					}
+					update_post_meta($post_id, 'tem_cnpj', $tem_cnpj);
+					update_post_meta($post_id, 'razao', sanitize_text_field($_REQUEST['razao']));
+					update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
+					$cat_id = isset($_REQUEST['cat']) && !empty($_REQUEST['cat']) ? sanitize_text_field($_REQUEST['cat']) : -1;
+					$subcat_id = isset($_REQUEST['subcat']) && !empty($_REQUEST['subcat']) ? sanitize_text_field($_REQUEST['subcat']) : -1;
+					$cats = array();
+					if($cat_id > 0) $cats[] = $cat_id;
+					if($subcat_id > 0) $cats[] = $subcat_id;
+					if(!empty($cats)) wp_set_post_terms($post_id, $cats, 'category');
 			}?>
-			<div class="passo-6 Cadastro-Efetuado">
+			<div class="passo-7 Cadastro-Efetuado">
 				<div class="Rectangle">
 					<div class="row">
 						<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
