@@ -613,7 +613,7 @@ input.Rectangle-cidade {
   background-color: #ffffff;
 }
 .passo-7 .Rectangle {
-  width: 729px;
+  width: auto;
   height: 697px;
   background-color: #fef8ef;
   margin: auto;
@@ -648,4 +648,33 @@ input.Rectangle-cidade {
 
 .localbiz-custom-register #page-container {
 	padding-top: 0 !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .Title-Copy {
+  max-width: 730px;
+  height: 31px;
+  font-family: Poppins;
+  font-size: 4vw;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #222a41;
+}
+.Title-Copy-2 {
+  max-width: 540px;
+  height: 22px;
+  font-family: OpenSans;
+  font-size: 3vw;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #7e7e7e;
+}
 }
