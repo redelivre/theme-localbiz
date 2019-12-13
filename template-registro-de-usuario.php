@@ -13,6 +13,21 @@
 <?php
 	$stage=array_key_exists('estagio', $_REQUEST) ? sanitize_text_field( $_REQUEST['estagio'] ) : 1;
 	$wpc_captcha = class_exists('WP_Captcha') ? new WP_Captcha() : false;
+	
+	function localbiz_hidden_fields() {
+		$stage=array_key_exists('estagio', $_REQUEST) ? sanitize_text_field( $_REQUEST['estagio'] ) : 1;?>
+		<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/><?php
+		if($stage > 1) wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field');
+		if( array_key_exists('tipo-registro', $_REQUEST) ): ?>
+		 	<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo sanitize_text_field( $_REQUEST['tipo-registro'] )?>"/><?php
+		elseif ($stage == 1):?>
+			<input type="hidden" id="tipo-registro" name="tipo-registro" value=""/><?php
+		endif;
+		if(array_key_exists('post_id', $_REQUEST) && sanitize_text_field( $_REQUEST['post_id'] ) > 0) : ?>
+			<input type="hidden" id="post_id" name="post_id" value="<?php echo sanitize_text_field( $_REQUEST['post_id'] )?>"/>
+		<?php
+		endif;
+	}
 ?>
 <?php switch ($stage) { 
 	case 1: ?>
@@ -28,8 +43,7 @@
 				<div class="Title-Copy-2">Juntos podemos fortalecer nossa sociedade e economia</div>
 			</div>
 			<form class="localbiz_registerform" id="localbiz_registerform1">
-				<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/>
-				<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : '' ?>"/>
+				<?php localbiz_hidden_fields(); ?>
 				<div class="row">
 					<div class="Rectangle-Copy-3" onclick="jQuery('#tipo-registro').val('empresa');jQuery('#localbiz_registerform1').submit();">
 						<div class="Rectangle-img">
@@ -97,8 +111,7 @@
 						</div>
 						<form class="localbiz_registerform" id="localbiz_registerform2">
 							<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
-							<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/>
-							<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : '' ?>"/>
+							<?php localbiz_hidden_fields(); ?>
 							<div class="row">
 								<div class="Title-Copy-2">
 									Dados do negócio
@@ -212,6 +225,7 @@
 			$_REQUEST['error'] = 'São necessários os dados de contato e login';
 			if($check_captcha instanceof WP_Error) {
 				$_REQUEST['WP_Error'] = $check_captcha;
+				$_REQUEST['error'] .= 'Valor do captcha errado';
 			}
 			$url = '/registro-de-usuario' . '?' . http_build_query($_REQUEST);
 			wp_redirect($url);
@@ -279,10 +293,7 @@
 						</div>
 					</div>
 					<form class="localbiz_registerform" id="localbiz_registerform2">
-						<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
-						<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/>
-						<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : '' ?>"/>
-						<input type="hidden" id="post_id" name="post_id" value="<?php echo array_key_exists('post_id', $_REQUEST) ? sanitize_text_field( $_REQUEST['post_id'] ) : '' ?>"/>
+						<?php localbiz_hidden_fields(); ?>
 						<div class="row">
 							<div class="Title-Copy-2">
 								Sua Região
@@ -397,10 +408,7 @@
 						</div>
 					</div>
 					<form class="localbiz_registerform" id="localbiz_registerform2">
-						<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
-						<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/>
-						<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : '' ?>"/>
-						<input type="hidden" id="post_id" name="post_id" value="<?php echo array_key_exists('post_id', $_REQUEST) ? sanitize_text_field( $_REQUEST['post_id'] ) : '' ?>"/>
+						<?php localbiz_hidden_fields(); ?>
 						<div class="row">
 							<div class="Title-Copy-2">
 								Tipo e tamanho do seu negócio
@@ -455,6 +463,11 @@
 				</div>
 			</div>
 	<?php
+		} else {
+			$_REQUEST['estagio'] = 2;
+			$_REQUEST['error'] = 'É necessario estar logado ou criar uma conta na primeira parte do cadastro';
+			$url = '/registro-de-usuario' . '?' . http_build_query($_REQUEST);
+			wp_redirect($url);
 		}
 	break;
 	case 5:
@@ -504,10 +517,7 @@
 						</div>
 					</div>
 					<form class="localbiz_registerform" id="localbiz_registerform2">
-						<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
-						<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/>
-						<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : '' ?>"/>
-						<input type="hidden" id="post_id" name="post_id" value="<?php echo array_key_exists('post_id', $_REQUEST) ? sanitize_text_field( $_REQUEST['post_id'] ) : '' ?>"/>
+						<?php localbiz_hidden_fields(); ?>
 						<div class="row">
 							<div class="Title-Copy-2">
 								Identificando o Seu Negócio Local
@@ -541,6 +551,11 @@
 					</form>
 				</div>
 			</div><?php
+		} else {
+			$_REQUEST['estagio'] = 2;
+			$_REQUEST['error'] = 'É necessario estar logado ou criar uma conta na primeira parte do cadastro';
+			$url = '/registro-de-usuario' . '?' . http_build_query($_REQUEST);
+			wp_redirect($url);
 		}
 	break;
 	case 6:
@@ -599,10 +614,7 @@
 							</div>
 						</div>
 						<form class="localbiz_registerform" id="localbiz_registerform2">
-							<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
-							<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/>
-							<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : '' ?>"/>
-							<input type="hidden" id="post_id" name="post_id" value="<?php echo array_key_exists('post_id', $_REQUEST) ? sanitize_text_field( $_REQUEST['post_id'] ) : '' ?>"/>
+							<?php localbiz_hidden_fields(); ?>
 							<div class="row">
 								<div class="Title-Copy-2">
 									Finalizando cadastro
@@ -625,9 +637,15 @@
 										<?php $image_id = get_post_meta ( $post_id, 'localbiz-perfil-image-id', true ); ?>
 										<input type="hidden" id="localbiz-perfil-image-id"
 											name="localbiz-perfil-image-id" value="<?php echo $image_id; ?>">
-										<?php if ( $image_id ) {
+										<?php
+										$imgurl = false;
+										if ( $image_id ) {
 											$imgurl = wp_get_attachment_image_src ( $image_id, 'thumbnail' );
-										} else {
+											if($imgurl) {
+												$imgurl = $imgurl[0];
+											}
+										} 
+										if($imgurl == false){
 											$imgurl = get_stylesheet_directory_uri().'/img/invalid-name.svg';
 										} ?>
 										<div id="localbiz-perfil-image-wrapper">
@@ -739,6 +757,11 @@
 					</div>
 				</div><?php
 			}
+		} else {
+			$_REQUEST['estagio'] = 2;
+			$_REQUEST['error'] = 'É necessario estar logado ou criar uma conta na primeira parte do cadastro';
+			$url = '/registro-de-usuario' . '?' . http_build_query($_REQUEST);
+			wp_redirect($url);
 		}
 	break;
 	case 7:
@@ -810,6 +833,11 @@
 					</div>
 				</div>
 			</div><?php
+		} else {
+			$_REQUEST['estagio'] = 2;
+			$_REQUEST['error'] = 'É necessario estar logado ou criar uma conta na primeira parte do cadastro';
+			$url = '/registro-de-usuario' . '?' . http_build_query($_REQUEST);
+			wp_redirect($url);
 		}
 	break;
 } ?>
