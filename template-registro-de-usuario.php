@@ -42,7 +42,7 @@
 			<div class="row">
 				<div class="Title-Copy-2">Juntos podemos fortalecer nossa sociedade e economia</div>
 			</div>
-			<form class="localbiz_registerform" id="localbiz_registerform1">
+			<form class="localbiz_registerform" id="localbiz_registerform1" method="post" >
 				<?php localbiz_hidden_fields(); ?>
 				<div class="row">
 					<div class="Rectangle-Copy-3" onclick="jQuery('#tipo-registro').val('empresa');jQuery('#localbiz_registerform1').submit();">
