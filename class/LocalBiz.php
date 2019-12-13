@@ -23,6 +23,10 @@ class LocalBiz {
 		add_action( 'wp_ajax_nopriv_locabiz_category_selected_action', array($this, 'category_selected_action') );//for not 'logged in' users.
 		add_action( 'save_post', array($this, 'save_post'), 10, 2 );
 		add_filter( 'body_class', array($this, 'custom_body_class') );
+		add_filter( 'wp_title', array($this, 'wp_title'), 10, 1 );
+		add_filter( 'pre_get_document_title', array($this, 'wp_title'), 10, 1 );
+		add_filter( 'ajax_query_attachments_args', array($this, 'ajax_query_attachments_args') );
+		$this->add_upload_files_cap();
 	}
 	public function enqueue_styles() {
 		wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
@@ -247,12 +251,123 @@ class LocalBiz {
 				value="<?php echo get_post_meta($post_id, 'razao', true); ?>"
 				required="required">
 		</div>
+		<div class="row">
+			<div class="form-field term-group-wrap">
+				<div>
+					<div class="row aleft image-title"><label class=""><?php _e( 'Imagem do perfil', 'localbiz' ); ?></label></div>
+					<?php $image_id = get_post_meta ( $post_id, 'localbiz-perfil-image-id', true ); ?>
+					<input type="hidden" id="localbiz-perfil-image-id"
+						name="localbiz-perfil-image-id" value="<?php echo $image_id; ?>">
+					<?php
+					$imgurl = false;
+					if ( $image_id ) {
+						$imgurl = wp_get_attachment_image_src ( $image_id, 'thumbnail' );
+						if($imgurl) {
+							$imgurl = $imgurl[0];
+						}
+					} 
+					if($imgurl == false){
+						$imgurl = get_stylesheet_directory_uri().'/img/invalid-name.svg';
+					} ?>
+					<div id="localbiz-perfil-image-wrapper">
+						<div class="img-Oval" style="background-image: url('<?php echo $imgurl; ?>');background-size: auto;">
+						</div>
+					</div>
+					<div class="row col-1">
+						<div class="row marginb05">
+							<input
+								type="button"
+								class="button button-secondary ct_tax_media_button Title-Copy-4"
+								id="ct_tax_media_button"
+								name="ct_tax_media_button"
+								value="<?php _e( 'Carregar Imagem', 'localbiz' ); ?>"
+							/>
+						</div>
+						<div class="row">
+							<input
+								type="button"
+								class="button button-secondary ct_tax_media_remove Title-Copy-4"
+								id="ct_tax_media_remove"
+								name="ct_tax_media_remove"
+								value="<?php _e( 'Remover Imagem', 'localbiz' ); ?>"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="subtitle-2">
+				Contato do seu negócio
+			</div>
+		</div>
+		<div class="row">
+			<div class="title">
+				Telefone do negócio
+			</div>
+		</div>
+		<div class="row">
+			<input type="tel" name="tel" id="tel"  class="Rectangle" value="<?php echo get_post_meta($post_id, 'tel', true); ?>" >
+		</div>
+		<div class="row">
+			<div class="title">
+				Email do Negócio
+			</div>
+		</div>
+		<div class="row">
+			<input type="email" name="email_localbiz" id="email_localbiz"  class="Rectangle" value="<?php echo get_post_meta($post_id, 'email_localbiz', true); ?>" >
+		</div>
+		<div class="row">
+			<div class="title">
+				Site do negócio
+			</div>
+		</div>
+		<div class="row">
+			<input type="url" name="site" id="site"  class="Rectangle" value="<?php echo get_post_meta($post_id, 'site', true); ?>" >
+		</div>
+		<div class="row">
+			<div class="title">
+				Instagram do negócio
+			</div>
+		</div>
+		<div class="row">
+			<input name="insta" id="insta"  class="Rectangle" value="<?php echo get_post_meta($post_id, 'insta', true); ?>" >
+		</div>
+		<div class="row">
+			<div class="title">
+				Facebook do negócio
+			</div>
+		</div>
+		<div class="row">
+			<input name="facebook" id="facebook"  class="Rectangle" value="<?php echo get_post_meta($post_id, 'facebook', true); ?>" >
+		</div>
+		<div class="row">
+			<div class="title">
+				Linkedin do negócio
+			</div>
+		</div>
+		<div class="row">
+			<input name="linkedin" id="linkedin"  class="Rectangle" value="<?php echo get_post_meta($post_id, 'linkedin', true); ?>" >
+		</div>
 		<?php
 	}
 	public function enqueue_scripts() {
 		wp_enqueue_script ( 'cepjs', get_stylesheet_directory_uri() . '/js/jquery.autocomplete-address.min.js', array('jquery'), '1.0', true);
 		wp_enqueue_script('mask', get_stylesheet_directory_uri() . '/js/jquery.mask.min.js', array('jquery'), '', true);
-		wp_enqueue_script('locabiz-registro', get_stylesheet_directory_uri() . '/js/registro-de-usuario.js', array('jquery'), '', true);
+		wp_enqueue_script('localbiz-registro', get_stylesheet_directory_uri() . '/js/registro-de-usuario.js', array('jquery'), '', true);
+		if(is_user_logged_in() && isset($_REQUEST['estagio']) && $_REQUEST['estagio'] == 6) {
+			wp_enqueue_media();
+			wp_enqueue_script('tag-it', get_stylesheet_directory_uri() . '/js/tag-it.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-autocomplete'), '', true);
+		}
+		wp_localize_script( 'localbiz-registro', 'localbiz', $this->localize_vars() );
+		wp_enqueue_style('tag-it', get_stylesheet_directory_uri() . '/css/jquery.tagit.css');
+		wp_enqueue_style('tag-it-theme', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css');
+	}
+	
+	public function localize_vars() {
+		return array(
+			'stylesheet_directory' => get_stylesheet_directory_uri()
+		);
 	}
 	
 	public static function check_post_owner($post_id) {
@@ -287,6 +402,50 @@ class LocalBiz {
 				fclose($file);
 			}
 		}
+		$labels = array
+		(
+				'name' => __('Produtos e Serviços', 'delibera'),
+				'singular_name' => __('Produto ou Serviço', 'delibera'),
+				'search_items' => __('Procurar por Produtos e Serviços','delibera'),
+				'all_items' => __('Todos os Produtos e Serviços','delibera'),
+				'parent_item' => __( 'Produto ou Serviço Pai','delibera'),
+				'parent_item_colon' => __( 'Produto ou Serviço Pai:','delibera'),
+				'edit_item' => __('Editar Produto ou Serviço','delibera'),
+				'update_item' => __('Atualizar um Produto ou Serviço','delibera'),
+				'add_new_item' => __('Adicionar Novo Produto ou Serviço','delibera'),
+				'add_new' => __('Adicionar Novo','delibera'),
+				'new_item_name' => __('Novo Produto ou Serviço','delibera'),
+				'view_item' => __('Visualizar Produto ou Serviço','delibera'),
+				'not_found' =>  __('Nenhum Produto ou Serviço localizado','delibera'),
+				'not_found_in_trash' => __('Nenhum Produto ou Serviço localizado na lixeira','delibera'),
+				'menu_name' => __('Produtos e Serviços','delibera')
+		);
+		
+		$args = array
+		(
+				'label' => __('Produtos e Serviços','delibera'),
+				'labels' => $labels,
+				'public' => true,
+				'capabilities' => array(
+						'upload_files'
+				),
+				//'show_in_nav_menus' => true, // Public
+				// 'show_ui' => '', // Public
+				'hierarchical' => true,
+				//'update_count_callback' => '', //Contar objetos associados
+				'rewrite' => true,
+				//'query_var' => '',
+				//'_builtin' => '' // Core
+		);
+		
+		register_taxonomy('produtoservico', array('localbiz'), $args);
+	}
+	
+	public function wp_title(string $title) {
+		if(get_query_var('custom_user_register')) {
+			return 'LocalBiz: Cadastro';
+		}
+		return $title;
 	}
 	
 	public static function category_subcategory_select_form() { ?>
@@ -437,11 +596,23 @@ class LocalBiz {
 		update_post_meta($post_id, 'razao', sanitize_text_field($_POST['razao']));
 	}
 	
-	function custom_body_class($classes) {
+	public function custom_body_class($classes) {
 		if(get_query_var('custom_user_register') || strpos($_SERVER['REQUEST_URI'], '/registro-de-usuario/' !== false ) ){
 			$classes[] = 'localbiz-custom-register';
 		}
 		return $classes;
+	}
+	
+	public function ajax_query_attachments_args( $query ) {
+		$user_id = get_current_user_id();
+		if ( $user_id && !current_user_can('activate_plugins') && !current_user_can('edit_others_posts') ) {
+			$query['author'] = $user_id;
+		}
+		return $query;
+	}
+	public function add_upload_files_cap() {
+		$role = get_role( 'subscriber' ); //The role you want to grant the capability
+		$role->add_cap( 'upload_files' );
 	}
 }
 

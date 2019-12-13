@@ -28,6 +28,12 @@ div.row {
     display: inline-block;
     position: relative;
 }
+.localbiz-custom-register #main-footer {
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+}
 .Group-30 {
   width: 144px;
   height: 40px;
@@ -125,6 +131,9 @@ div.row {
   width: 100%;
   height: 1024px;
   background-color: #ffffff;
+  display: block;
+  position: relative;
+  float: left;
 }
 .passo-2 .Rectangle-2, .passo-3 .Rectangle-2, .passo-4 .Rectangle-2, .passo-5 .Rectangle-2, .passo-6 .Rectangle-2, .passo-7 .Rectangle-2 {
   width: 80%;
@@ -229,7 +238,7 @@ div.row {
   background-color: #f05822;
   cursor: pointer;
 }
-.passo-2 .Title-Copy-4, .passo-3 .Title-Copy-4, .passo-4 .Title-Copy-4, .passo-5 .Title-Copy-4, .passo-5 .Title-Copy-6, .passo-5 .Title-Copy-7 {
+.passo-2 .Title-Copy-4, .passo-3 .Title-Copy-4, .passo-4 .Title-Copy-4, .passo-5 .Title-Copy-4, .passo-6 .Title-Copy-4, .passo-7 .Title-Copy-4 {
   width: 351.3px;
   height: 23px;
   font-family: Poppins;
@@ -409,6 +418,18 @@ input.Rectangle-cidade {
 	margin-bottom: 1em;
 }
 
+.row .aleft {
+	text-align: left;
+}
+
+.row.col-1 {
+	width: 50%;
+}
+
+.row .marginb05 {
+	margin-bottom: 0.5em;
+}
+
 /* passo 5 */
 .passo-5 .Title-Copy-2 {
   width: 287px;
@@ -452,7 +473,13 @@ input.Rectangle-cidade {
 }
 
 /* passo 6 */
-.passo-6 .Title-Copy {
+.passo-6 .Onboarding-2 {
+  height: 1859px;
+}
+.passo-6 .Title-Copy-2 {
+	width: auto;
+}
+.passo-6 .subtitle {
   width: 275px;
   height: 31px;
   font-family: Poppins;
@@ -465,8 +492,7 @@ input.Rectangle-cidade {
   text-align: center;
   color: #222a41;
 }
-.passo-6 .Title-Copy-3 {
-  width: 150px;
+.passo-6 .subtitle-2 {
   height: 23px;
   font-family: Poppins;
   font-size: 16px;
@@ -477,17 +503,21 @@ input.Rectangle-cidade {
   letter-spacing: normal;
   color: #222a41;
 }
-.passo-6 .title {
-  width: 280px;
-  height: 20px;
-  font-family: Poppins;
-  font-size: 14px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #222a41;
+.passo-6 div.image-title {
+	display: block;
+	position: relative;
+	margin-bottom: 1em;
+	margin-left: 7em;
+	width: 280px;
+	height: 20px;
+	font-family: Poppins;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #222a41;
 }
 .passo-6 .-Value {
   width: 240px;
@@ -502,15 +532,14 @@ input.Rectangle-cidade {
   text-align: center;
   color: #838383;
 }
-.passo-6 .Rectangle-Copy-2 {
+.passo-6 input.button {
   width: 240px;
   height: 40px;
   border-radius: 23px;
   background-color: #2294f0;
+  cursor: pointer;
 }
-.passo-6 .Title-Copy-4 {
-  width: 240px;
-  height: 23px;
+.passo-6 input.button.Title-Copy-4 {
   font-family: Poppins;
   font-size: 16px;
   font-weight: normal;
@@ -520,6 +549,7 @@ input.Rectangle-cidade {
   letter-spacing: normal;
   text-align: center;
   color: #ffffff;
+  border: none;
 }
 .passo-6 .img-Oval {
   width: 80px;
@@ -528,12 +558,51 @@ input.Rectangle-cidade {
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 100%;
+  vertical-align: bottom;
+  background-size: cover;
 }
 .passo-6 .img-Oval img {
   width: 24px;
   height: 19.2px;
   object-fit: contain;
   background-color: #f05822;
+}
+.passo-6 textarea, .passo-6 .tagit {
+  width: 350px;
+  height: 96px;
+  border-radius: 6px;
+  border: solid 1px #7e7e7e;
+  position: relative;
+  display: inline-block;
+}
+.passo-6 #desc {
+  width: 350px;
+  height: 203px;
+  border-radius: 6px;
+  border: solid 1px #7e7e7e;
+}
+.passo-6 input.Rectangle {
+	background-position: 11px center;
+	background-repeat: no-repeat;
+	padding-left: 40px;
+}
+.passo-6 input#tel {
+	background-image: url("http://localbiz.redelivre.ethymos.com.br/wp-content/themes/localbiz/img/tel.svg");
+}
+.passo-6 input#site {
+	background-image: url("http://localbiz.redelivre.ethymos.com.br/wp-content/themes/localbiz/img/site.svg");
+}
+.passo-6 input#email_localbiz {
+	background-image: url("http://localbiz.redelivre.ethymos.com.br/wp-content/themes/localbiz/img/email.svg");
+}
+.passo-6 input#insta {
+	background-image: url("http://localbiz.redelivre.ethymos.com.br/wp-content/themes/localbiz/img/insta.svg");
+}
+.passo-6 input#facebook {
+	background-image: url("http://localbiz.redelivre.ethymos.com.br/wp-content/themes/localbiz/img/facebook.svg");
+}
+.passo-6 input#linkedin {
+	background-image: url("http://localbiz.redelivre.ethymos.com.br/wp-content/themes/localbiz/img/linkedin.svg");
 }
 
 /* passo 7 */

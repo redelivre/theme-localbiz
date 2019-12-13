@@ -200,7 +200,7 @@
 					$username = $username_base.'-'.$sulfix;
 				}
 				$wp_user_id = wp_create_user($username, $password, $email);
-				wp_update_user( array( 'ID' => $wp_user_id, 'display_name' => sanitize_title($_REQUEST['nome-responsavel'])));
+				wp_update_user( array( 'ID' => $wp_user_id, 'display_name' => sanitize_text_field($_REQUEST['nome-responsavel'])));
 				if(is_int($wp_user_id)) {
 					$wpuser = wp_set_current_user($wp_user_id);
 					wp_set_auth_cookie($wpuser->ID);
@@ -238,12 +238,12 @@
 				}
 			} else {
 				$post = array();
-				$post['post_title'] = sanitize_title($_REQUEST['nome-negocio']);
+				$post['post_title'] = sanitize_text_field($_REQUEST['nome-negocio']);
 				$post['post_type'] = 'localbiz';
 				$post['post_status'] = 'pending';
 				$post_id = wp_insert_post($post);
-				update_post_meta($post_id, 'nome-responsavel', sanitize_title($_REQUEST['nome-responsavel']));
-				update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
+				update_post_meta($post_id, 'nome-responsavel', sanitize_text_field($_REQUEST['nome-responsavel']));
+				update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
 			}
 			$_REQUEST['post_id'] = $post_id; ?>
 			<div class="passo-3">
@@ -361,7 +361,7 @@
 				update_post_meta($post_id, 'complemento', sanitize_text_field($_REQUEST['complemento']));
 				update_post_meta($post_id, 'estado', sanitize_text_field($_REQUEST['estado']));
 				update_post_meta($post_id, 'cidade', sanitize_text_field($_REQUEST['cidade']));
-				update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
+				update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
 			}
 		?>
 			<div class="passo-4">
@@ -468,7 +468,7 @@
 					$post_id = sanitize_text_field($_REQUEST['post_id']);
 					update_post_meta($post_id, 'fins', sanitize_text_field($_REQUEST['fins']));
 					update_post_meta($post_id, 'tamanho', sanitize_text_field($_REQUEST['tamanho']));
-					update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
+					update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
 			}
 			?>
 			<div class="passo-5">
@@ -559,92 +559,186 @@
 				}
 				update_post_meta($post_id, 'tem_cnpj', $tem_cnpj);
 				update_post_meta($post_id, 'razao', sanitize_text_field($_REQUEST['razao']));
-				update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
+				update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
 				$cat_id = isset($_REQUEST['cat']) && !empty($_REQUEST['cat']) ? sanitize_text_field($_REQUEST['cat']) : -1;
 				$subcat_id = isset($_REQUEST['subcat']) && !empty($_REQUEST['subcat']) ? sanitize_text_field($_REQUEST['subcat']) : -1;
 				$cats = array();
 				if($cat_id > 0) $cats[] = $cat_id;
 				if($subcat_id > 0) $cats[] = $subcat_id;
-				if(!empty($cats)) wp_set_post_terms($post_id, $cats, 'category');
-			}?>
-			<div class="passo-6">
-				<div class="Onboarding-2">
-					<div class="row">
-						<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
-					</div>
-					<?php LocalBiz::display_error(); ?>
-					<div class="row">
-						<div class="Rectangle-2">
-							<div class="row">
-								<div class="Title-Copy">
-									Cadastrando seu negócio
-								</div>
-							</div>
-							<div class="row">
-								<div class="Oval-Copy">
-									<span>1</span>
-								</div>
-								<div class="Oval-Copy">
-									<span>2</span>
-								</div>
-								<div class="Oval-Copy">
-									<span>3</span>
-								</div>
-								<div class="Oval-Copy">
-									<span>4</span>
-								</div>
-								<div class="Oval">
-									<span>5</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<form class="localbiz_registerform" id="localbiz_registerform2">
-						<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
-						<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/>
-						<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : '' ?>"/>
-						<input type="hidden" id="post_id" name="post_id" value="<?php echo array_key_exists('post_id', $_REQUEST) ? sanitize_text_field( $_REQUEST['post_id'] ) : '' ?>"/>
+				if(!empty($cats)) wp_set_post_terms($post_id, $cats, 'category');?>
+				<div class="passo-6">
+					<div class="Onboarding-2">
 						<div class="row">
-							<div class="Title-Copy-2">
-								Finalizando cadastro
-							</div>
+							<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
 						</div>
+						<?php LocalBiz::display_error(); ?>
 						<div class="row">
-							<div class="Title-Copy-2">
-								<?php echo sanitize_text_field($_REQUEST['razao']); ?>
-							</div>
-						</div>
-						<div class="row">
-							<tr class="form-field term-group-wrap">
-								<th scope="row"><label for="localbiz-perfil-image-id"><?php _e( 'Imagem', 'localbiz' ); ?></label>
-								</th>
-								<td>
-									<?php $image_id = get_term_meta ( $post_id, 'localbiz-perfil-image-id', true ); ?>
-									<input type="hidden" id="localbiz-perfil-image-id"
-										name="localbiz-perfil-image-id" value="<?php echo $image_id; ?>">
-									<?php if ( $image_id ) {
-										$imgurl = wp_get_attachment_image_src ( $image_id, 'thumbnail' );
-									} else {
-										$imgurl = get_stylesheet_directory_uri().'/img/invalid-name.svg';
-									} ?>
-									<div id="localbiz-perfil-image-wrapper" class="img-Oval" style="background-image: url('<?php echo $imgurl; ?>');">
+							<div class="Rectangle-2">
+								<div class="row">
+									<div class="Title-Copy">
+										Cadastrando seu negócio
 									</div>
-									<p>
-										<input type="button"
-											class="button button-secondary ct_tax_media_button"
-											id="ct_tax_media_button" name="ct_tax_media_button"
-											value="<?php _e( 'Adicionar Imagem', 'localbiz' ); ?>" /> <input
-											type="button" class="button button-secondary ct_tax_media_remove"
-											id="ct_tax_media_remove" name="ct_tax_media_remove"
-											value="<?php _e( 'Remover Imagem', 'localbiz' ); ?>" />
-									</p>
-								</td>
-							</tr>
+								</div>
+								<div class="row">
+									<div class="Oval-Copy">
+										<span>1</span>
+									</div>
+									<div class="Oval-Copy">
+										<span>2</span>
+									</div>
+									<div class="Oval-Copy">
+										<span>3</span>
+									</div>
+									<div class="Oval-Copy">
+										<span>4</span>
+									</div>
+									<div class="Oval">
+										<span>5</span>
+									</div>
+								</div>
+							</div>
 						</div>
-						<?php submit_template(); ?>
-					</form>
-				</div>
-			</div><?php
+						<form class="localbiz_registerform" id="localbiz_registerform2">
+							<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
+							<input type="hidden" name="estagio" value="<?php echo $stage+1; ?>"/>
+							<input type="hidden" id="tipo-registro" name="tipo-registro" value="<?php echo array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : '' ?>"/>
+							<input type="hidden" id="post_id" name="post_id" value="<?php echo array_key_exists('post_id', $_REQUEST) ? sanitize_text_field( $_REQUEST['post_id'] ) : '' ?>"/>
+							<div class="row">
+								<div class="Title-Copy-2">
+									Finalizando cadastro
+								</div>
+							</div>
+							<div class="row">
+								<div class="subtitle">
+									<?php echo sanitize_text_field($_REQUEST['razao']); ?>
+								</div>
+							</div>
+							<div class="row">
+								<div class="subtitle-2">
+									Sobre seu negócio
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-field term-group-wrap">
+									<div>
+										<div class="row aleft image-title"><label class=""><?php _e( 'Imagem do perfil', 'localbiz' ); ?></label></div>
+										<?php $image_id = get_post_meta ( $post_id, 'localbiz-perfil-image-id', true ); ?>
+										<input type="hidden" id="localbiz-perfil-image-id"
+											name="localbiz-perfil-image-id" value="<?php echo $image_id; ?>">
+										<?php if ( $image_id ) {
+											$imgurl = wp_get_attachment_image_src ( $image_id, 'thumbnail' );
+										} else {
+											$imgurl = get_stylesheet_directory_uri().'/img/invalid-name.svg';
+										} ?>
+										<div id="localbiz-perfil-image-wrapper">
+											<div class="img-Oval" style="background-image: url('<?php echo $imgurl; ?>');background-size: auto;">
+											</div>
+										</div>
+										<div class="row col-1">
+											<div class="row marginb05">
+												<input
+													type="button"
+													class="button button-secondary ct_tax_media_button Title-Copy-4"
+													id="ct_tax_media_button"
+													name="ct_tax_media_button"
+													value="<?php _e( 'Carregar Imagem', 'localbiz' ); ?>"
+												/>
+											</div>
+											<div class="row">
+												<input
+													type="button"
+													class="button button-secondary ct_tax_media_remove Title-Copy-4"
+													id="ct_tax_media_remove"
+													name="ct_tax_media_remove"
+													value="<?php _e( 'Remover Imagem', 'localbiz' ); ?>"
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="title">
+									Resumo sobre seu negócio
+								</div>
+							</div>
+							<div class="row">
+								<textarea name="resumo" id="resumo"  class="Rectangle" required="required" ><?php echo array_key_exists('resumo', $_REQUEST) ? sanitize_text_field($_REQUEST['resumo']) : ''; ?></textarea>
+							</div>
+							<div class="row">
+								<div class="title">
+									Descrição Completa do negócio
+								</div>
+							</div>
+							<div class="row">
+								<textarea name="desc" id="desc"  class="Rectangle" required="required" ><?php echo array_key_exists('desc', $_REQUEST) ? sanitize_text_field($_REQUEST['desc']) : ''; ?></textarea>
+							</div>
+							<div class="row">
+								<div class="title">
+									Produtos e Serviços
+								</div>
+							</div>
+							<div class="row">
+								<input name="produtos" id="produtos"  class="Rectangle" value="<?php echo array_key_exists('produtos', $_REQUEST) ? sanitize_text_field($_REQUEST['produtos']) : ''; ?>" >
+							</div>
+							<div class="row">
+								<div class="subtitle-2">
+									Contato do seu negócio
+								</div>
+							</div>
+							<div class="row">
+								<div class="title">
+									Telefone do negócio
+								</div>
+							</div>
+							<div class="row">
+								<input type="tel" name="tel" id="tel"  class="Rectangle" value="<?php echo array_key_exists('tel', $_REQUEST) ? sanitize_text_field($_REQUEST['tel']) : ''; ?>" >
+							</div>
+							<div class="row">
+								<div class="title">
+									Email do Negócio
+								</div>
+							</div>
+							<div class="row">
+								<input type="email" name="email_localbiz" id="email_localbiz"  class="Rectangle" value="<?php echo array_key_exists('email_localbiz', $_REQUEST) ? sanitize_text_field($_REQUEST['email_localbiz']) : ''; ?>" >
+							</div>
+							<div class="row">
+								<div class="title">
+									Site do negócio
+								</div>
+							</div>
+							<div class="row">
+								<input type="url" name="site" id="site"  class="Rectangle" value="<?php echo array_key_exists('site', $_REQUEST) ? sanitize_text_field($_REQUEST['site']) : ''; ?>" >
+							</div>
+							<div class="row">
+								<div class="title">
+									Instagram do negócio
+								</div>
+							</div>
+							<div class="row">
+								<input name="insta" id="insta"  class="Rectangle" value="<?php echo array_key_exists('insta', $_REQUEST) ? sanitize_text_field($_REQUEST['insta']) : ''; ?>" >
+							</div>
+							<div class="row">
+								<div class="title">
+									Facebook do negócio
+								</div>
+							</div>
+							<div class="row">
+								<input name="facebook" id="facebook"  class="Rectangle" value="<?php echo array_key_exists('facebook', $_REQUEST) ? sanitize_text_field($_REQUEST['facebook']) : ''; ?>" >
+							</div>
+							<div class="row">
+								<div class="title">
+									Linkedin do negócio
+								</div>
+							</div>
+							<div class="row">
+								<input name="linkedin" id="linkedin"  class="Rectangle" value="<?php echo array_key_exists('linkedin', $_REQUEST) ? sanitize_text_field($_REQUEST['linkedin']) : ''; ?>" >
+							</div>
+							<?php submit_template(); ?>
+						</form>
+					</div>
+				</div><?php
+			}
 		}
 	break;
 	case 7:
@@ -652,23 +746,50 @@
 			if(
 				isset($_REQUEST['post_id']) &&
 				LocalBiz::check_post_owner($_REQUEST['post_id']) &&
-				( isset($_REQUEST['cnpj']) || 'S' == sanitize_text_field($_REQUEST['tem_cnpj']) ) &&
-				isset($_REQUEST['razao'])
-				) {
-					$post_id = sanitize_text_field($_REQUEST['post_id']);
-					$tem_cnpj = sanitize_text_field($_REQUEST['tem_cnpj']);
-					if($tem_cnpj == 'S') {
-						update_post_meta($post_id, 'cnpj', sanitize_text_field($_REQUEST['cnpj']));
+				isset($_REQUEST['resumo']) &&
+				isset($_REQUEST['desc']) &&
+				isset($_REQUEST['produtos'])
+			) {
+				$post_id = sanitize_text_field($_REQUEST['post_id']);
+				$post_content = sanitize_text_field($_REQUEST['desc']);
+				$post_excerpt = sanitize_text_field($_REQUEST['resumo']);
+				wp_update_post(array(
+					'ID' => $post_id,
+					'post_content' => $post_content,
+					'post_excerpt' => $post_excerpt
+				));
+				update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
+				if(isset($_REQUEST['localbiz-perfil-image-id']) && ! empty($_REQUEST['localbiz-perfil-image-id']))
+					update_post_meta($post_id, 'localbiz-perfil-image-id', sanitize_text_field($_REQUEST['localbiz-perfil-image-id']));
+				if(isset($_REQUEST['tel']) && ! empty($_REQUEST['tel']))
+					update_post_meta($post_id, 'tel', sanitize_text_field($_REQUEST['tel']));
+				if(isset($_REQUEST['email_localbiz']) && ! empty($_REQUEST['email_localbiz']))
+					update_post_meta($post_id, 'email_localbiz', sanitize_text_field($_REQUEST['email_localbiz']));
+				if(isset($_REQUEST['site']) && ! empty($_REQUEST['site']))
+					update_post_meta($post_id, 'site', sanitize_text_field($_REQUEST['site']));
+				if(isset($_REQUEST['insta']) && ! empty($_REQUEST['insta']))
+					update_post_meta($post_id, 'insta', sanitize_text_field($_REQUEST['insta']));
+				if(isset($_REQUEST['facebook']) && ! empty($_REQUEST['facebook']))
+					update_post_meta($post_id, 'facebook', sanitize_text_field($_REQUEST['facebook']));
+				if(isset($_REQUEST['linkedin']) && ! empty($_REQUEST['linkedin']))
+					update_post_meta($post_id, 'linkedin', sanitize_text_field($_REQUEST['linkedin']));
+				if(isset($_REQUEST['produtos']) && ! empty($_REQUEST['produtos'])) {
+					$pEs_text = sanitize_text_field($_REQUEST['produtos']);
+					$pEs = explode(",", $pEs_text);
+					$pEs_terms = array();
+					foreach($pEs as $produto) {
+						$pterm = get_term_by('name', $produto, 'produtoservico');
+						if($pterm !== false) {
+							$pEs_terms[] = $pterm->term_id;
+						} else {
+							$pterm = wp_insert_term($produto, 'produtoservico');
+							if(! $pterm instanceof WP_Error) {
+								$pEs_terms[] = $pterm['term_id'];
+							}
+						}
 					}
-					update_post_meta($post_id, 'tem_cnpj', $tem_cnpj);
-					update_post_meta($post_id, 'razao', sanitize_text_field($_REQUEST['razao']));
-					update_post_meta($post_id, 'estagio', sanitize_title($_REQUEST['estagio']));
-					$cat_id = isset($_REQUEST['cat']) && !empty($_REQUEST['cat']) ? sanitize_text_field($_REQUEST['cat']) : -1;
-					$subcat_id = isset($_REQUEST['subcat']) && !empty($_REQUEST['subcat']) ? sanitize_text_field($_REQUEST['subcat']) : -1;
-					$cats = array();
-					if($cat_id > 0) $cats[] = $cat_id;
-					if($subcat_id > 0) $cats[] = $subcat_id;
-					if(!empty($cats)) wp_set_post_terms($post_id, $cats, 'category');
+					wp_set_post_terms($post_id, $pEs_terms, 'produtoservico');
+				}
 			}?>
 			<div class="passo-7 Cadastro-Efetuado">
 				<div class="Rectangle">
