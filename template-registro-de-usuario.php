@@ -109,7 +109,7 @@
 								</div>
 							</div>
 						</div>
-						<form class="localbiz_registerform" id="localbiz_registerform2">
+						<form class="localbiz_registerform" id="localbiz_registerform2" method="post">
 							<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
 							<?php localbiz_hidden_fields(); ?>
 							<div class="row">
@@ -292,7 +292,7 @@
 							</div>
 						</div>
 					</div>
-					<form class="localbiz_registerform" id="localbiz_registerform2">
+					<form class="localbiz_registerform" id="localbiz_registerform2" method="post">
 						<?php localbiz_hidden_fields(); ?>
 						<div class="row">
 							<div class="Title-Copy-2">
@@ -407,7 +407,7 @@
 							</div>
 						</div>
 					</div>
-					<form class="localbiz_registerform" id="localbiz_registerform2">
+					<form class="localbiz_registerform" id="localbiz_registerform2" method="post">
 						<?php localbiz_hidden_fields(); ?>
 						<div class="row">
 							<div class="Title-Copy-2">
@@ -516,7 +516,7 @@
 							</div>
 						</div>
 					</div>
-					<form class="localbiz_registerform" id="localbiz_registerform2">
+					<form class="localbiz_registerform" id="localbiz_registerform2" method="post">
 						<?php localbiz_hidden_fields(); ?>
 						<div class="row">
 							<div class="Title-Copy-2">
@@ -613,7 +613,7 @@
 								</div>
 							</div>
 						</div>
-						<form class="localbiz_registerform" id="localbiz_registerform2">
+						<form class="localbiz_registerform" id="localbiz_registerform2" method="post">
 							<?php localbiz_hidden_fields(); ?>
 							<div class="row">
 								<div class="Title-Copy-2">
