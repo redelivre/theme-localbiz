@@ -560,6 +560,7 @@ input.Rectangle-cidade {
   border-radius: 100%;
   vertical-align: bottom;
   background-size: cover;
+  margin-left: -4em;
 }
 .passo-6 .img-Oval img {
   width: 24px;
