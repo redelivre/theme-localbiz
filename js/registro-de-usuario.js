@@ -59,6 +59,13 @@ jQuery(document)
                         });
                         jQuery("input#tel").mask("(00) 00000-00009");
                     }
+                    if (jQuery("#produtos").length) {
+                        jQuery("input#site").change(function() {
+                            if (!/^https*:\/\//.test(this.value)) {
+                                this.value = "http://" + this.value;
+                            }
+                        });
+                    }
 
                     function ct_media_upload(button_class) {
                         var _custom_media = true, _orig_send_attachment = wp.media.editor.send.attachment;
