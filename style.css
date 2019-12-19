@@ -652,29 +652,193 @@ input.Rectangle-cidade {
 
 @media only screen and (max-width: 600px) {
   .Title-Copy {
-  max-width: 730px;
-  height: 31px;
-  font-family: Poppins;
-  font-size: 4vw;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: center;
-  color: #222a41;
+	  max-width: 730px;
+	  height: 31px;
+	  font-family: Poppins;
+	  font-size: 4vw;
+	  font-weight: 600;
+	  font-stretch: normal;
+	  font-style: normal;
+	  line-height: normal;
+	  letter-spacing: normal;
+	  text-align: center;
+	  color: #222a41;
+	}
+	.Title-Copy-2 {
+	  max-width: 540px;
+	  height: 22px;
+	  font-family: OpenSans;
+	  font-size: 3vw;
+	  font-weight: normal;
+	  font-stretch: normal;
+	  font-style: normal;
+	  line-height: normal;
+	  letter-spacing: normal;
+	  text-align: center;
+	  color: #7e7e7e;
+	}
 }
-.Title-Copy-2 {
-  max-width: 540px;
-  height: 22px;
+.et_pb_gutters3 .et_pb_column_4_4 .localbiz-cat-gallery .et_pb_grid_item {
+	width: 14.875%;
+}
+.et_pb_gutters3 .et_pb_column_4_4 .localbiz-cat-gallery .et_pb_grid_item:nth-child(4n+1) {
+	clear: none;
+	margin-right: 0;
+}
+
+.et_pb_gutters3 .et_pb_column_4_4 .localbiz-cat-gallery .et_pb_grid_item:nth-child(5n+1) {
+	clear: both;
+	margin-right: 5.5%;
+}
+
+.et_pb_gutters3 .et_pb_column_4_4 .localbiz-cat-gallery .et_pb_grid_item:nth-child(4n) {
+	margin-right: 5.5%;
+}
+.localbiz-cat-gallery img {
+    max-width: 205px;
+    max-height: 205px;
+    border-radius: 14px;
+    border-bottom-left-radius: 40px;
+}
+.localbiz-cat-gallery .et_pb_gallery_title {
+    font-size: 22px;
+    color: #ff5500 !important;
+    text-align: center;
+    max-width: 205px;
+}
+.localbiz-search-Field-form {
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+}
+.localbiz-search-Field {
+  height: 60px;
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12);
+  background-color: #ffffff;
+  display: block;
+  position: relative;
+  float: left;
+}
+.localbiz-search-by-name::before {
+	text-shadow: 0 0;
+	font-family: ETmodules !important;
+	font-weight: 400;
+	font-style: normal;
+	font-variant: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	line-height: 1;
+	text-transform: none;
+	speak: none;
+	font-size: 17px;
+	content: "\55";
+    margin: 0 16px;
+}
+input[type="text"].localbiz-search-by-name {
+  width: 42%;
+  height: 30px;
   font-family: OpenSans;
-  font-size: 3vw;
+  font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
+  line-height: 1.67;
+  letter-spacing: normal;
+  color: #767676;
+}
+.localbiz-search-by-city {
+  width: 28%;
+  height: 60px;
+  font-family: OpenSans;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: normal;
+  color: #767676;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
+}
+.localbiz-search-by-cep {
+  width: 11%;
+  height: 30px;
+  font-family: OpenSans;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.67;
+  letter-spacing: normal;
+  color: #767676;
+}
+.localbiz-search-button {
+  width: 12%;
+  height: 60px;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  background-color: #e95822;
+  font-family: OpenSans;
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
   line-height: normal;
   letter-spacing: normal;
   text-align: center;
-  color: #7e7e7e;
+  color: #ffffff;
+  float: right;
+  border: none;
 }
+.localbiz-search-Field input[type="text"] {
+	border: none;
+}
+.localbiz-search-Field select {
+	border: none;
+	border-left: solid 1px #ddd;
+	border-right: solid 1px #ddd;
+}
+.et_pb_column_2_3 .et_pb_row_inner.et_pb_gutters1 .et_pb_column_1_3.localbiz-card-col1 {
+    width: 20%;
+}
+.et_pb_column_2_3 .et_pb_row_inner.et_pb_gutters1 .et_pb_column_1_3.localbiz-card-col2 {
+    width: 80%;
+}
+.localbiz-produto-e-servico {
+    display: block;
+    position: relative;
+    float: left;
+    padding: 0.2em 1.5em;
+    background-color: #ff9700;
+    margin-right: 0.5em;
+    border-radius: 23px;
+	font-family: OpenSans;
+	font-size: 12px;
+	font-weight: normal;
+	font-stretch: normal;
+	font-style: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: center;
+	color: #ffffff;
+}
+.localbiz-produto-e-servico:nth-child(5n) {
+    margin-right: 0;
+}
+.localbiz-share {
+    margin-right: 1em;
+}
+.localbiz-share.icon-site {
+    margin-right: 0;
+}
+.localbiz-search-Field select {
+    background-image: url("http://localbiz.redelivre.ethymos.com.br/wp-content/themes/localbiz/img/dropdown-icon.svg");
+    background-repeat: no-repeat;
+    background-position: 94% center;
+    padding-left: 1em;
 }

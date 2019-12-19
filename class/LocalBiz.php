@@ -27,6 +27,11 @@ class LocalBiz {
 		add_filter( 'pre_get_document_title', array($this, 'wp_title'), 10, 1 );
 		add_filter( 'ajax_query_attachments_args', array($this, 'ajax_query_attachments_args') );
 		$this->add_upload_files_cap();
+		add_action( 'pre_get_posts', array($this, 'search_query'));
+		add_shortcode('localbiz_search', array($this, 'search_shortcode'));
+		add_shortcode('localbiz_share_icons', array($this, 'share_shortcode'));
+		add_shortcode('localbiz_produtosEservicos', array($this, 'produtosEservicos_shortcode'));
+		add_filter('term_link', array($this, 'category_link') );
 	}
 	public function enqueue_styles() {
 		wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
@@ -270,7 +275,7 @@ class LocalBiz {
 						$imgurl = get_stylesheet_directory_uri().'/img/invalid-name.svg';
 					} ?>
 					<div id="localbiz-perfil-image-wrapper">
-						<div class="img-Oval" style="background-image: url('<?php echo $imgurl; ?>');background-size: auto;">
+						<div class="img-Oval" style="background-image: url('<?php echo $imgurl; ?>');background-size: auto;width: 120px;height: 120px;background-position: center;">
 						</div>
 					</div>
 					<div class="row col-1">
@@ -594,6 +599,21 @@ class LocalBiz {
 			update_post_meta($post_id, 'cnpj', sanitize_text_field($_POST['cnpj']));
 		}
 		update_post_meta($post_id, 'razao', sanitize_text_field($_POST['razao']));
+		
+		if(isset($_REQUEST['localbiz-perfil-image-id']) && ! empty($_REQUEST['localbiz-perfil-image-id']))
+			update_post_meta($post_id, 'localbiz-perfil-image-id', sanitize_text_field($_REQUEST['localbiz-perfil-image-id']));
+		if(isset($_REQUEST['tel']) && ! empty($_REQUEST['tel']))
+			update_post_meta($post_id, 'tel', sanitize_text_field($_REQUEST['tel']));
+		if(isset($_REQUEST['email_localbiz']) && ! empty($_REQUEST['email_localbiz']))
+			update_post_meta($post_id, 'email_localbiz', sanitize_text_field($_REQUEST['email_localbiz']));
+		if(isset($_REQUEST['site']) && ! empty($_REQUEST['site']))
+			update_post_meta($post_id, 'site', sanitize_text_field($_REQUEST['site']));
+		if(isset($_REQUEST['insta']) && ! empty($_REQUEST['insta']))
+			update_post_meta($post_id, 'insta', sanitize_text_field($_REQUEST['insta']));
+		if(isset($_REQUEST['facebook']) && ! empty($_REQUEST['facebook']))
+			update_post_meta($post_id, 'facebook', sanitize_text_field($_REQUEST['facebook']));
+		if(isset($_REQUEST['linkedin']) && ! empty($_REQUEST['linkedin']))
+			update_post_meta($post_id, 'linkedin', sanitize_text_field($_REQUEST['linkedin']));
 	}
 	
 	public function custom_body_class($classes) {
@@ -613,6 +633,137 @@ class LocalBiz {
 	public function add_upload_files_cap() {
 		$role = get_role( 'subscriber' ); //The role you want to grant the capability
 		$role->add_cap( 'upload_files' );
+	}
+	public function search_shortcode($atts) {
+		$ops = shortcode_atts( array(
+				//'foo' => 'something',
+				//'bar' => 'something else',
+		), $atts );
+		$cep = '';
+		$city = '';
+		$qsearch = '';
+		if(isset($_REQUEST['localbiz-search-by-name'])) $qsearch = sanitize_text_field($_REQUEST['localbiz-search-by-name']);
+		if(isset($_REQUEST['localbiz-search-by-city'])) $city = sanitize_text_field($_REQUEST['localbiz-search-by-city']);
+		if(isset($_REQUEST['localbiz-search-by-cep'])) $cep = sanitize_text_field($_REQUEST['localbiz-search-by-cep']);
+		$cidades = LocalBiz::get_meta_values('cidade', 'localbiz', false);
+		$cidades_options = '';
+		$has_city = false;
+		foreach ($cidades as $cidade) {
+			if(!empty($cidade)) {
+				$selected = '';
+				if(!empty($cidade) && mb_strtolower($cidade) == mb_strtolower($city)) {
+					$selected = 'selected="selected"';
+					$has_city = true;
+				}
+				$cidades_options .= '<option value="'.$cidade.'" '.$selected.'>'.$cidade.'</option>';
+			}
+		}
+		$search ='
+			<form class="localbiz-search-Field-form">
+				<input type="hidden" name="post_type" value="'.(isset($_REQUEST['post_type']) ? sanitize_text_field($_REQUEST['post_type']) : 'localbiz').'" />
+				<div class="localbiz-search-Field">
+					<span class="localbiz-search-by-name">
+						<input type="text" name="localbiz-search-by-name" class="localbiz-search-by-name" placeholder="Pesquise por nome, categoria, produtos…" value="'.$qsearch.'"/>
+					</span>
+					<select name="localbiz-search-by-city" class="localbiz-search-by-city">
+						<option value="" disabled '.($has_city ? '' : 'selected').'>Cidade</option>
+						'.$cidades_options.'
+					</select>
+					<input type="text" name="localbiz-search-by-cep" class="localbiz-search-by-cep" placeholder="CEP" value="'.$cep.'"/>
+					<button type="submit" class="localbiz-search-button">Pesquisar</button>
+				</div>
+			</form>';
+		return $search;
+	}
+	
+	public function share_shortcode($atts) {
+		$facebook = get_post_meta(get_the_ID(), 'facebook', true);
+		$insta = get_post_meta(get_the_ID(), 'insta', true);
+		$linkedin = get_post_meta(get_the_ID(), 'linkedin', true);
+		$site = get_post_meta(get_the_ID(), 'site', true);
+		$html = '<div class="localbiz-share-icons">';
+		if(!empty($facebook))
+			$html .= '<a href="'.$facebook.'" target="_blank"><img src="'.get_stylesheet_directory_uri().'/img/icon-facebook.svg" class="localbiz-share icon-facebook"></a>';
+		if(!empty($insta))
+			$html .= '<a href="'.$insta.'" target="_blank"><img src="'.get_stylesheet_directory_uri().'/img/icon-insta.svg"	class="localbiz-share icon-insta"></a>';
+		if(!empty($linkedin))
+			$html .= '<a href="'.$linkedin.'" target="_blank"><img src="'.get_stylesheet_directory_uri().'/img/icon-linkedin.svg" class="localbiz-share icon-linkedin"></a>';
+		if(!empty($site))
+			$html .= '<a href="'.$site.'" target="_blank"><img src="'.get_stylesheet_directory_uri().'/img/icon-site.svg" class="localbiz-share icon-site"></a>';
+		$html .= '</div>';
+		
+		return $html;
+	}
+	
+	public function produtosEservicos_shortcode($atts) {
+		$pEss = get_the_terms(get_the_ID(), 'produtoservico');
+		$html = '';
+		if($pEss !== false && ! $pEss instanceof WP_Error) {
+			for($i = 0; $i < count($pEss) && $i < 5; $i++) {
+				$html .= '<span class="localbiz-produto-e-servico">'.$pEss[$i]->name.'</span>';
+			}
+		}
+		return $html;
+	}
+	
+	/**
+	 * Based on https://wordpress.stackexchange.com/questions/9394/getting-all-values-for-a-custom-field-key-cross-post
+	 * @param string $key
+	 * @param string $type
+	 * @param string $status
+	 * @return void|array|string[]|NULL[]
+	 */
+	public static function get_meta_values( $key = '', $type = 'post', $status = 'publish' ) {
+		global $wpdb;
+		if( empty( $key ) )
+			return;
+		
+		$r = $wpdb->get_col( $wpdb->prepare( "
+	        SELECT DISTINCT pm.meta_value FROM {$wpdb->postmeta} pm
+	        LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+	        WHERE pm.meta_key = %s
+	        AND p.post_type = %s".($status === false ? '' : "
+	        AND p.post_status = %s"), $key, $type, $status ) );
+		return $r;
+	}
+	
+	/**
+	 * 
+	 * @param WP_Query $query
+	 */
+	function search_query($query){
+		if( $query->is_main_query() && $query->is_post_type_archive('localbiz') ){
+			$cep = '';
+			$city = '';
+			$search = '';
+			if(isset($_REQUEST['localbiz-search-by-name'])) $search = sanitize_text_field($_REQUEST['localbiz-search-by-name']);
+			if(isset($_REQUEST['localbiz-search-by-city'])) $city = sanitize_text_field($_REQUEST['localbiz-search-by-city']);
+			if(isset($_REQUEST['localbiz-search-by-cep'])) $cep = sanitize_text_field($_REQUEST['localbiz-search-by-cep']);
+			if(!empty($search)) {
+				$query->set('s', $search);
+			}
+			if(!empty($cep)) {
+				//TODO cep
+			}
+			if(!empty($city)) {
+				$meta_query = array(
+					array(
+							'key' => 'cidade',
+							'value' => $city,
+							'compare' => 'like'
+					)
+				);
+				$query->set('meta_query', $meta_query);
+			}
+			
+		}
+		return $query;
+	}
+	public function category_link($link) {
+		if(is_post_type_archive('localbiz') ) {
+			$link .= '?post_type=localbiz';
+		}
+		return $link;
 	}
 }
 
