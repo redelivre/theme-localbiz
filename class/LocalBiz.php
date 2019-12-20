@@ -32,6 +32,7 @@ class LocalBiz {
 		add_shortcode('localbiz_share_icons', array($this, 'share_shortcode'));
 		add_shortcode('localbiz_produtosEservicos', array($this, 'produtosEservicos_shortcode'));
 		add_filter('term_link', array($this, 'category_link') );
+		add_filter('widget_categories_args', array($this, 'widget_categories_args') );
 	}
 	public function enqueue_styles() {
 		wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
@@ -764,6 +765,18 @@ class LocalBiz {
 			$link .= '?post_type=localbiz';
 		}
 		return $link;
+	}
+	public function widget_categories_args($catargs) {
+		if(is_post_type_archive('localbiz') ) {
+			$catargs['meta_query'] = array(
+				array(
+					'key'     => 'category-localbiz',
+					'value'   => 'N',
+					'compare' => '!='
+				)
+			);
+		}
+		return $catargs;
 	}
 }
 
