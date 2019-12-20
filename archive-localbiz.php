@@ -37,16 +37,34 @@
 								</div> <!-- end .et_pb_widget -->
 							</div>
 						';
+						$image_index = 0;
 						$qsearch = '';
-						if(isset($_REQUEST['localbiz-search-by-name'])) $qsearch = sanitize_text_field($_REQUEST['localbiz-search-by-name']);
+						$image_html = '';
+						if(isset($_REQUEST['localbiz-search-by-name'])) {
+							$qsearch = '“'.sanitize_text_field($_REQUEST['localbiz-search-by-name']).'"';
+						} elseif(isset($_REQUEST['localbiz-search-by-city'])) {
+							$qsearch = '“'.sanitize_text_field($_REQUEST['localbiz-search-by-city']).'"';
+						} elseif(isset($_REQUEST['localbiz-search-by-cep'])) {
+							$qsearch = '“'.sanitize_text_field($_REQUEST['localbiz-search-by-cep']).'"';
+						} else {
+							$qsearch = single_cat_title( '', false );
+							$term = get_queried_object();
+							if ( is_category() ) {
+								if($term->parent == 0) {
+									$imgurl = CatImage::get_category_image_url($term);
+									if($imgurl !== false) {
+										$image_html = '<div class="et_pb_with_border et_pb_module et_pb_image et_pb_image_'.$image_index++.' et_always_center_on_mobile" style="display: block;position: relative;float: left;margin-bottom:0;"><span class="et_pb_image_wrap has-box-shadow-overlay" style="height: 90px;width:90px;background-image:url(\''.$imgurl.'\');background-repeat: no-repeat;background-position: center;border-radius: 20px 20px 20px 35px;overflow: hidden;border-width: 0;border-color: #ffffff;box-shadow: 0px 2px 12px 0px rgba(0,0,0,0.3);margin-right:2em"><div class="box-shadow-overlay"></div></span></div>';
+									}
+								}
+							}
+						}
 						global $wp_query;
-						$header_text = '[et_pb_text _builder_version="3.21.4" header_font="||||||||" header_3_font="||||||||" header_3_text_color="#a6a6a6"]<h1>“'.$qsearch.'"</h1>
+						$header_text = $image_html.'[et_pb_text _builder_version="3.21.4" header_font="||||||||" header_3_font="||||||||" header_3_text_color="#a6a6a6"]<h1>'.$qsearch.'</h1>
 <h3>Exibindo todos os resultados ('.$wp_query->found_posts.')</h3>[/et_pb_text]';
 						
 						$content = '
-[et_pb_section fb_built="1" _builder_version="3.21.4" background_color="#f7f1e8" custom_margin="0px||0px||true" custom_padding="0px||0px||true"][et_pb_row use_custom_width="on" width_unit="off" _builder_version="3.21.4"][et_pb_column type="4_4" _builder_version="3.21.4"][et_pb_text _builder_version="3.21.4"]<p>[localbiz_search]</p>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="3.21.4"][et_pb_row use_custom_width="on" width_unit="off" _builder_version="3.21.4"][et_pb_column type="4_4" _builder_version="3.21.4"]'.$header_text.'[/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" specialty="on" use_custom_width="on" width_unit="off" _builder_version="3.21.4"][et_pb_column type="1_3"][et_pb_sidebar show_border="off" _builder_version="3.21.4"][/et_pb_sidebar][/et_pb_column][et_pb_column type="2_3" specialty_columns="2"]
+[et_pb_section fb_built="1" _builder_version="3.21.4" background_color="#f7f1e8" custom_margin="0px||0px||true" custom_padding="0px||0px||true"][et_pb_row use_custom_width="on" width_unit="off" _builder_version="3.21.4"][et_pb_column type="4_4" _builder_version="3.21.4"][et_pb_text _builder_version="3.21.4"]<p>[localbiz_search]</p>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="3.21.4" custom_padding="40px|0px|0|0px|false|false"][et_pb_row custom_padding="0px|0px|0|0px|false|false" use_custom_width="on" width_unit="off" _builder_version="3.21.4"][et_pb_column type="4_4" _builder_version="3.21.4"]'.$header_text.'[/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" specialty="on" use_custom_width="on" width_unit="off" padding_top_1="0px" _builder_version="3.21.4"][et_pb_column type="1_3"][et_pb_sidebar show_border="off" _builder_version="3.21.4"][/et_pb_sidebar][/et_pb_column][et_pb_column type="2_3" specialty_columns="2"]
 						';
-						$image_index = 0;
 						if ( have_posts() ) {
 							while ( have_posts() ) {
 								the_post();
