@@ -30,9 +30,15 @@
 							$maplink = '';
 							if(!empty($endereco)) {
 								$address1 = "$endereco, $numero";
-								if(!empty($complemento)) $address1 .= ", $complemento";
-								if(!empty($bairro)) $address1 .= ", $bairro";
-								$maplink = $address1;
+								$address1_map = $address1;
+								if(!empty($complemento)){
+									$address1 .= ", $complemento";
+								}
+								if(!empty($bairro)) {
+									$address1 .= ", $bairro";
+									$address1_map .= ", $bairro";
+								}
+								$maplink = $address1_map;
 							}
 							if(!empty($cidade)) {
 								$address2 = "$cidade - $estado";
