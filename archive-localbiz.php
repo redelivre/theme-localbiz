@@ -68,7 +68,7 @@
 						if ( have_posts() ) {
 							while ( have_posts() ) {
 								the_post();
-								$row = '[et_pb_row_inner use_custom_gutter="on" gutter_width="1" border_radii="|15px|15px|15px|30px" _builder_version="3.21.4" background_color="#f7f1e8" custom_padding="2em|2em|2em|2em|true|true" custom_margin="||3em" module_class_1="localbiz-card-col1" module_class_2="localbiz-card-col2"]';
+								$row = '[et_pb_row_inner use_custom_gutter="on" gutter_width="1" border_radii="|15px|15px|15px|30px" _builder_version="3.21.4" background_color="#f7f1e8" custom_padding="2em|2em|2em|2em|true|true" custom_margin="||3em" module_class_1="localbiz-card-col1" module_class_2="localbiz-card-col2" link_option_url_new_window="on" link_option_url="'.get_the_permalink().'"]';
 								$image_id = get_post_meta(get_the_ID(), 'localbiz-perfil-image-id', true);
 								$imgurl = get_stylesheet_directory_uri().'/img/invalid-name.svg';
 								if(!empty($image_id)) {
@@ -82,8 +82,8 @@
 								$email = get_post_meta(get_the_ID(), 'email_localbiz', true);
 								$col2 = '
 [et_pb_column_inner type="1_2" saved_specialty_column_type="2_3"]'.$image_html.'[et_pb_text _builder_version="3.21.4"]<p>[localbiz_share_icons]</p>
-<p><a href="#fone" target="_blank" rel="noopener noreferrer">'.$tel.'</a></p>
-<p><a href="#email" target="_blank" rel="noopener noreferrer">'.$email.'</a></p>
+<p><a href="tel:'.$tel.'" target="_blank" rel="noopener noreferrer">'.$tel.'</a></p>
+<p><a href="mailto:'.$email.'" target="_blank" rel="noopener noreferrer">'.$email.'</a></p>
 [/et_pb_text][/et_pb_column_inner]
 								';
 								$title = get_the_title();
