@@ -843,3 +843,11 @@ input[type="text"].localbiz-search-by-name {
     padding-left: 1em;
     background-size: 14px;
 }
+.localbiz-single-contact-img {
+    vertical-align: middle;
+    margin-right: .5em;
+}
+.localbiz-single-tags {
+    font-size: 18px;
+    margin-right: 0.5em;
+}
