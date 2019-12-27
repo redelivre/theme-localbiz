@@ -164,7 +164,7 @@
 														?>
 														<div class="et_pb_gallery_item et_pb_grid_item et_pb_bg_layout_light" style="display: block;">
 															<div class="landscape">
-																<a href="<?php echo get_category_link($category)."?post_type=localbiz"; ?>" title="<?php echo $category->name; ?>">
+																<a href="<?php echo get_category_link($category); ?>" title="<?php echo $category->name; ?>">
 																	<img src="<?php echo $image_src; ?>" alt="<?php echo $category->name; ?>">
 																	<h3 class="et_pb_gallery_title"><?php echo $category->name; ?></h3>
 																</a>

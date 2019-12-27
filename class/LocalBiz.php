@@ -761,7 +761,7 @@ class LocalBiz {
 		return $query;
 	}
 	public function category_link($link) {
-		if(is_post_type_archive('localbiz') ) {
+		if(is_post_type_archive('localbiz') && strpos($link, 'post_type=') === false ) {
 			$link .= '?post_type=localbiz';
 		}
 		return $link;
