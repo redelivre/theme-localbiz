@@ -31,6 +31,7 @@ class LocalBiz {
 		add_shortcode('localbiz_search', array($this, 'search_shortcode'));
 		add_shortcode('localbiz_share_icons', array($this, 'share_shortcode'));
 		add_shortcode('localbiz_produtosEservicos', array($this, 'produtosEservicos_shortcode'));
+		add_shortcode('localbiz_hashtags', array($this, 'tags_shortcode'));
 		add_filter('term_link', array($this, 'category_link') );
 		add_filter('widget_categories_args', array($this, 'widget_categories_args') );
 	}
@@ -660,7 +661,7 @@ class LocalBiz {
 			}
 		}
 		$search ='
-			<form class="localbiz-search-Field-form">
+			<form class="localbiz-search-Field-form" action="/localbiz/">
 				<input type="hidden" name="post_type" value="'.(isset($_REQUEST['post_type']) ? sanitize_text_field($_REQUEST['post_type']) : 'localbiz').'" />
 				<div class="localbiz-search-Field">
 					<span class="localbiz-search-by-name">
@@ -678,6 +679,9 @@ class LocalBiz {
 	}
 	
 	public function share_shortcode($atts) {
+		$ops = shortcode_atts( array(
+				'site' => 'yes',
+		), $atts );
 		$facebook = get_post_meta(get_the_ID(), 'facebook', true);
 		$insta = get_post_meta(get_the_ID(), 'insta', true);
 		$linkedin = get_post_meta(get_the_ID(), 'linkedin', true);
@@ -689,11 +693,25 @@ class LocalBiz {
 			$html .= '<a href="'.$insta.'" target="_blank"><img src="'.get_stylesheet_directory_uri().'/img/icon-insta.svg"	class="localbiz-share icon-insta"></a>';
 		if(!empty($linkedin))
 			$html .= '<a href="'.$linkedin.'" target="_blank"><img src="'.get_stylesheet_directory_uri().'/img/icon-linkedin.svg" class="localbiz-share icon-linkedin"></a>';
-		if(!empty($site))
+		if(!empty($site) && $ops['site'] == 'yes')
 			$html .= '<a href="'.$site.'" target="_blank"><img src="'.get_stylesheet_directory_uri().'/img/icon-site.svg" class="localbiz-share icon-site"></a>';
 		$html .= '</div>';
 		
 		return $html;
+	}
+	
+	public function tags_shortcode($atts) {
+		/*$ops = shortcode_atts( array(
+				'site' => 'yes',
+		), $atts );*/
+		$tags = get_the_tags();
+		$tags_html = '';
+		if($tags !== false && ! $tags instanceof WP_Error) {
+			foreach ($tags as $tag) {
+				$tags_html .= '<span class="localbiz-single-tags">#'.$tag->name.'</span>';
+			}
+		}
+		return $tags_html;
 	}
 	
 	public function produtosEservicos_shortcode($atts) {
