@@ -152,7 +152,7 @@
 						
 						if ( count($categories) > 0 ) {
 							shuffle($categories);
-							$session = 2;
+							$session = 10;
 							echo apply_filters('the_content', '[et_pb_section fb_built="1" _builder_version="3.21.4" use_background_color_gradient="on" background_color_gradient_start="rgba(255,255,255,0.85)" background_color_gradient_end="rgba(255,255,255,0.13)" background_color_gradient_direction="90deg" background_color_gradient_start_position="20%" background_color_gradient_overlays_image="on" background_image="http://localbiz.redelivre.ethymos.com.br/files/2019/12/20191109183710_IMG_9733.jpg" border_radii="||30px|30px|" custom_margin="|3%||3%||true" custom_padding="13%||13%||true"][et_pb_row _builder_version="3.21.4"][et_pb_column type="4_4" _builder_version="3.21.4"][et_pb_text _builder_version="3.21.4"]<h1>Procurando por negócios locais?</h1>[/et_pb_text][et_pb_text _builder_version="3.21.4" text_font="||||||||" header_font="||||||||" header_5_font="||||||||" header_5_text_color="#ff5500"]<h5>Pesquise pelos negócios locais de seu interesse</h5>[/et_pb_text][/et_pb_column][localbiz_search][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="3.21.4"][et_pb_row _builder_version="3.21.4"][et_pb_column type="4_4" _builder_version="3.21.4"][et_pb_text _builder_version="3.21.4"]<h2>Explore por categorias</h2>[/et_pb_text][et_pb_text _builder_version="3.21.4" text_font="||||||||" header_font="||||||||" header_5_font="||||||||" header_5_text_color="#a6a6a6"]<h5>Escolha uma categoria de sua preferência</h5>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]');?>
 								<div class="et_pb_section et_pb_section_<?php echo $session; ?> et_section_regular">
 									<div class="et_pb_row et_pb_row_<?php echo $session; ?> et_pb_row_fullwidth">
@@ -191,6 +191,7 @@
 							get_template_part( 'includes/no-results', 'index' );
 						}
 					}?>
+					<?php LocalBiz::get_footer(true); ?>
 				</div>
 			</div>
 		</div> <!-- .entry-content -->

@@ -56,6 +56,7 @@
 		'.(!empty($email) ? '<p><a href="mailto:'.$email.'" target="_blank" rel="noopener noreferrer" class="localbiz-single-contact-link"><img src="'.(get_stylesheet_directory_uri().'/img/icon-email.svg').'" alt="" class="alignnone size-full localbiz-single-contact-img" width="24" height="24" /> '.$email.'</a></p>' : '').'
 		[/et_pb_text][et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Localização</p>[/et_pb_text][et_pb_map _builder_version="3.21.4" address="'.$maplink.'"][et_pb_map_pin title="'.get_the_title().'" pin_address="'.$maplink.'" _builder_version="3.21.4"][/et_pb_map_pin][/et_pb_map][et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Hashtags</p>[/et_pb_text][et_pb_text _builder_version="3.21.4"]<p>[localbiz_hashtags]</p>[/et_pb_text]'.($instagram_clientID ? '[et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Fotos do Instagram</p>[/et_pb_text]' : '').'[/et_pb_column][/et_pb_row][/et_pb_section]
 							';
+							$content .= LocalBiz::get_footer();
 							echo apply_filters('the_content', $content);
 						}
 					} else {

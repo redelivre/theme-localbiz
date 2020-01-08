@@ -796,6 +796,23 @@ class LocalBiz {
 		}
 		return $catargs;
 	}
+	
+	public static function get_footer($echo = false, $html = false) {
+		$footer = '
+			[et_pb_section fb_built="1" _builder_version="3.21.4" background_image="'.get_stylesheet_directory_uri().'/img/Banner-Cadastro_2x.jpg" background_size="initial" border_radii="|10px|8px|8px|60px" border_color_all="#aaaaaa" border_style_all="ridge" box_shadow_style="preset3" box_shadow_color="rgba(255,151,0,0.3)" custom_margin="|6em||6em||true" custom_margin_phone="|0em||0em" custom_margin_last_edited="on|desktop" custom_padding="50px|0|50px|0px|false|false" z_index_tablet="500" global_module="471"][et_pb_row custom_padding="0px||0px" custom_margin="0px||0px||true" _builder_version="3.21.4"][et_pb_column type="4_4" _builder_version="3.0.47"][et_pb_text _builder_version="3.21.4" text_font="||||||||" text_line_height="1em" header_font="Open Sans|700|||||||" header_font_size="2.5vw" header_font_size_phone="6vw" header_font_size_last_edited="on|desktop" header_line_height="1.2em" header_2_font="Open Sans||||||||" max_width="76%" max_width_last_edited="on|phone" module_alignment="center" custom_margin="|||" z_index_tablet="500"]<h1 style="text-align: center"><span style="color: #ffffff"><strong>Entenda por que somos a plataforma certa para fomentar o seu negócio.</strong></span></h1>
+[/et_pb_text][et_pb_button button_url="/registro-de-usuario/" button_text="Cadastrar o seu negócio" button_alignment="center" _builder_version="3.21.4" custom_button="on" button_text_size="17px" button_text_color="#ff5500" button_bg_color="#ffffff" button_border_width="0px" button_border_color="#ffffff" button_border_radius="40px" button_font="Open Sans|600|||||||" button_icon="%%20%%" custom_margin="-10px|||" custom_padding="1em|2em|1em|2em" z_index_tablet="500"][/et_pb_button][et_pb_text _builder_version="3.21.4" custom_margin="-16px||"]<p style="text-align: center"><strong><span style="color: #ffffff">Não requer nenhum pagamento</span></strong></p>
+[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section]
+		';
+		$footer_html = '';
+		if($html || $echo) {
+			$footer_html = apply_filters('the_content', $footer);
+		}
+		if($echo) {
+			echo $footer_html;
+			return true;
+		}
+		return $html ? $footer_html : $footer;
+	}
 }
 
 new LocalBiz();
