@@ -774,8 +774,8 @@
 				isset($_REQUEST['produtos'])
 			) {
 				$post_id = sanitize_text_field($_REQUEST['post_id']);
-				$post_content = sanitize_text_field($_REQUEST['desc']);
-				$post_excerpt = sanitize_text_field($_REQUEST['resumo']);
+				$post_content = sanitize_textarea_field($_REQUEST['desc']);
+				$post_excerpt = sanitize_textarea_field($_REQUEST['resumo']);
 				wp_update_post(array(
 					'ID' => $post_id,
 					'post_content' => $post_content,
