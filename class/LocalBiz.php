@@ -34,6 +34,7 @@ class LocalBiz {
 		add_shortcode('localbiz_hashtags', array($this, 'tags_shortcode'));
 		add_filter('term_link', array($this, 'category_link') );
 		add_filter('widget_categories_args', array($this, 'widget_categories_args') );
+		add_filter('widget_title', array($this, 'widget_title'), 10, 3 );
 	}
 	public function enqueue_styles() {
 		wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
@@ -793,6 +794,11 @@ class LocalBiz {
 					'compare' => '!='
 				)
 			);
+			if(is_category()) {
+				global $wp_query;
+				$cat_id = $wp_query->get_queried_object_id();
+				$catargs['parent'] = $cat_id;
+			}
 		}
 		return $catargs;
 	}
@@ -812,6 +818,13 @@ class LocalBiz {
 			return true;
 		}
 		return $html ? $footer_html : $footer;
+	}
+	
+	public function widget_title($title, $instance, $id_base) {
+		if(is_post_type_archive('localbiz') && is_category() ) {
+			return _('Subcategorias');
+		}
+		return $title;
 	}
 }
 

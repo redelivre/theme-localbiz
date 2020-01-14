@@ -851,3 +851,23 @@ input[type="text"].localbiz-search-by-name {
     font-size: 18px;
     margin-right: 0.5em;
 }
+.post-type-archive-localbiz .widget_categories h4 {
+  font-family: OpenSans;
+  font-size: 22px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.55;
+  letter-spacing: normal;
+  color: #222a41;
+}
+.post-type-archive-localbiz .widget_categories li {
+  font-family: OpenSans;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 3.11;
+  letter-spacing: normal;
+  color: #8a919c;
+}
