@@ -775,7 +775,8 @@ class LocalBiz {
 				);
 				$query->set('meta_query', $meta_query);
 			}
-			
+			//TODO pagination
+			$query->set('posts_per_page', -1);
 		}
 		return $query;
 	}
