@@ -41,7 +41,11 @@
 						$qsearch = '';
 						$image_html = '';
 						if(isset($_REQUEST['localbiz-search-by-name'])) {
-							$qsearch = '“'.sanitize_text_field($_REQUEST['localbiz-search-by-name']).'"';
+							if(empty(sanitize_text_field($_REQUEST['localbiz-search-by-name']))) {
+								$qsearch = 'Todos os Localbiz';
+							} else {
+								$qsearch = '“'.sanitize_text_field($_REQUEST['localbiz-search-by-name']).'"';
+							}
 						} elseif(isset($_REQUEST['localbiz-search-by-city'])) {
 							$qsearch = '“'.sanitize_text_field($_REQUEST['localbiz-search-by-city']).'"';
 						} elseif(isset($_REQUEST['localbiz-search-by-cep'])) {
