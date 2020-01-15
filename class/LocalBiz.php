@@ -679,13 +679,23 @@ class LocalBiz {
 		return $search;
 	}
 	
+	public function fix_url($url, $https = true) {
+		$prefix = $https ? 'https://' : 'http://';
+		$scheme = parse_url($url, PHP_URL_SCHEME);
+		if (empty($scheme)) {
+			$url = $prefix . ltrim($url, '/');
+		}
+		return $url;
+	}
+	
 	public function share_shortcode($atts) {
 		$ops = shortcode_atts( array(
 				'site' => 'yes',
 		), $atts );
-		$facebook = get_post_meta(get_the_ID(), 'facebook', true);
-		$insta = get_post_meta(get_the_ID(), 'insta', true);
-		$linkedin = get_post_meta(get_the_ID(), 'linkedin', true);
+		$facebook = $this->fix_url(get_post_meta(get_the_ID(), 'facebook', true));
+		
+		$insta = $this->fix_url(get_post_meta(get_the_ID(), 'insta', true));
+		$linkedin = $this->fix_url(get_post_meta(get_the_ID(), 'linkedin', true));
 		$site = get_post_meta(get_the_ID(), 'site', true);
 		$html = '<div class="localbiz-share-icons">';
 		if(!empty($facebook))
