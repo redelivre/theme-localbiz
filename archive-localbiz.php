@@ -86,8 +86,8 @@
 								$email = get_post_meta(get_the_ID(), 'email_localbiz', true);
 								$col2 = '
 [et_pb_column_inner type="1_2" saved_specialty_column_type="2_3"]'.$image_html.'[et_pb_text _builder_version="3.21.4"]<p>[localbiz_share_icons]</p>
-<p><a href="tel:'.$tel.'" target="_blank" rel="noopener noreferrer">'.$tel.'</a></p>
-<p><a href="mailto:'.$email.'" target="_blank" rel="noopener noreferrer">'.$email.'</a></p>
+<p><a class="localbiz-telefone-link" href="tel:'.$tel.'" target="_blank" rel="noopener noreferrer">'.$tel.'</a></p>
+<p><a class="localbiz-mail-link" href="mailto:'.$email.'" target="_blank" rel="noopener noreferrer">'.$email.'</a></p>
 [/et_pb_text][/et_pb_column_inner]
 								';
 								$title = get_the_title();
@@ -123,7 +123,7 @@
 								
 								$col3 = '
 [et_pb_column_inner type="1_2" saved_specialty_column_type="2_3"][et_pb_text _builder_version="3.21.4" header_font="||||||||" header_2_font="||||||||" header_2_text_color="#ff5500"]<h2>'.$title.'</h2>
-<p>[localbiz_produtosEservicos]</p>[/et_pb_text][et_pb_text _builder_version="3.21.4"]<p>'.$excerpt.'</p>[/et_pb_text][et_pb_text _builder_version="3.21.4"]<p><a href="'.$maplink.'" target="_blank" rel="noopener noreferrer">'.$address1.'</a><br /><a href="'.$maplink.'" target="_blank" rel="noopener noreferrer">'.$address2.'</a></p>[/et_pb_text][/et_pb_column_inner]
+<p style="float: left;display: block;width: 100%;">[localbiz_produtosEservicos]</p>[/et_pb_text][et_pb_text _builder_version="3.21.4"]<p>'.$excerpt.'</p>[/et_pb_text][et_pb_text _builder_version="3.21.4"]<p><a href="'.$maplink.'" target="_blank" rel="noopener noreferrer">'.$address1.'</a><br /><a href="'.$maplink.'" target="_blank" rel="noopener noreferrer">'.$address2.'</a></p>[/et_pb_text][/et_pb_column_inner]
 								';
 								$row .= $col2.$col3.'[/et_pb_row_inner]';
 								$row = apply_filters('the_content', $row);

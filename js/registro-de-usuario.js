@@ -128,7 +128,19 @@ jQuery(document)
                                                                     + '/img/invalid-name.svg\');background-size: auto;"></div>');
                                         });
                     }
+                    if(screen.width <= 600) {
+                        set_categories_list_menu ();
+                    }
                 });
+function set_categories_list_menu () {
+    jQuery('.widget_categories ul li ul').remove();
+    jQuery('.widget_categories ul').hide();
+    jQuery('.widget_categories .widgettitle').click(function() {
+        jQuery('.widget_categories ul').toggle();
+        jQuery(this).toggleClass('down');
+    });
+} 
+
 function catchangeaction() {
     var parentCat = jQuery('#cat').val();
     // call admin ajax
