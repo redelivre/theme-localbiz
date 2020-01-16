@@ -846,9 +846,8 @@ class LocalBiz {
 	 * @return array|boolean
 	 */
 	public function geocode($address){
-		$google_api = get_option('et_google_api_settings', false);
-		if(!is_array($google_api) || !isset($google_api['api_key'])) return false;
-		$api_key = $google_api['api_key'];
+		if(!defined('LOCALBIZ_API')) define('LOCALBIZ_API', false);
+		$api_key = LOCALBIZ_API;
 		// url encode the address
 		$address = urlencode($address);
 		
