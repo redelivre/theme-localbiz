@@ -563,7 +563,7 @@
 			if(
 				isset($_REQUEST['post_id']) &&
 				LocalBiz::check_post_owner($_REQUEST['post_id']) &&
-				( isset($_REQUEST['cnpj']) || 'S' == sanitize_text_field($_REQUEST['tem_cnpj']) ) &&
+				( isset($_REQUEST['cnpj']) || 'N' == sanitize_text_field($_REQUEST['tem_cnpj']) ) &&
 				isset($_REQUEST['razao']) &&
 				isset($_REQUEST['tem_cnpj'])
 			) {
