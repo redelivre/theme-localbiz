@@ -17,6 +17,7 @@ class LocalBiz {
 	public function init() {
 		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_styles') );
 		add_action( 'wp_enqueue_scripts', array($this, 'enqueue_scripts') );
+		add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueue_scripts') );
 		$this->add_custom_post();
 		$this->create_terms();
 		add_action( 'wp_ajax_locabiz_category_selected_action', array($this, 'category_selected_action') );
@@ -35,6 +36,7 @@ class LocalBiz {
 		add_filter('term_link', array($this, 'category_link') );
 		add_filter('widget_categories_args', array($this, 'widget_categories_args') );
 		add_filter('widget_title', array($this, 'widget_title'), 10, 3 );
+		add_filter('mime_types', array($this, 'mime_types'));
 	}
 	public function enqueue_styles() {
 		wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
@@ -246,10 +248,10 @@ class LocalBiz {
 		<div class="row">
 			<div class="Check-box-vazio">
 				<input type="checkbox" name="tem_cnpj" id="tem_cnpj" class=""
-					value="N"> <label for="tem_cnpj">Ainda não possuo CNPJ</label>
+					value="N" <?php echo get_post_meta($post_id, 'tem_cnpj', true) == 'N' ? 'checked="checked"' : ''; ?>> <label for="tem_cnpj">Ainda não possuo CNPJ</label>
 			</div>
 			<input type="checkbox" name="tem_cnpj" id="tem_cnpj_sim" class="hide" style="display: none;"
-				value="S" checked="checked">
+				value="S" <?php echo get_post_meta($post_id, 'tem_cnpj', true) == 'S' ? 'checked="checked"' : ''; ?>>
 		</div>
 		<div class="row">
 			<div class="title">Razão Social</div>
@@ -359,12 +361,21 @@ class LocalBiz {
 		</div>
 		<?php
 	}
+	public function admin_enqueue_scripts($hook) {
+		if ( 'post.php' != $hook ) {
+			return;
+		}
+		if( 'localbiz' != get_post_type() ) {
+			return;
+		}
+		$this->enqueue_scripts();
+	}
 	public function enqueue_scripts() {
 		wp_enqueue_script ( 'cepjs', get_stylesheet_directory_uri() . '/js/jquery.autocomplete-address.min.js', array('jquery'), '1.0', true);
 		wp_enqueue_script('mask', get_stylesheet_directory_uri() . '/js/jquery.mask.min.js', array('jquery'), '', true);
 		wp_enqueue_script('localbiz-registro', get_stylesheet_directory_uri() . '/js/registro-de-usuario.js', array('jquery'), '', true);
 		if(is_user_logged_in() && isset($_REQUEST['estagio']) && $_REQUEST['estagio'] == 6) {
-			wp_enqueue_media();
+			wp_enqueue_media(array('post' => $_REQUEST['post_id']));
 			wp_enqueue_script('tag-it', get_stylesheet_directory_uri() . '/js/tag-it.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-autocomplete'), '', true);
 		}
 		wp_localize_script( 'localbiz-registro', 'localbiz', $this->localize_vars() );
@@ -720,7 +731,7 @@ class LocalBiz {
 		if($tags !== false && ! $tags instanceof WP_Error) {
 			foreach ($tags as $tag) {
 				$link = get_term_link($tag);
-				$tags_html .= '<a href="#"><span class="localbiz-single-tags">#'.$tag->name.'</span></a>';
+				$tags_html .= '<span class="localbiz-single-tags">#'.$tag->name.'</span>';
 			}
 		}
 		return $tags_html;
@@ -732,7 +743,7 @@ class LocalBiz {
 		if($pEss !== false && ! $pEss instanceof WP_Error) {
 			for($i = 0; $i < count($pEss) && $i < 5; $i++) {
 				$link = get_term_link($pEss[$i]);
-				$html .= '<a href="'.$link.'"><span class="localbiz-produto-e-servico">'.$pEss[$i]->name.'</span></a>';
+				$html .= '<span class="localbiz-produto-e-servico">'.$pEss[$i]->name.'</span>';
 			}
 		}
 		return $html;
@@ -896,6 +907,17 @@ class LocalBiz {
 			return $address_array;
 		}
 		return false;
+	}
+	
+	public function mime_types($mime_types) {
+		if(get_query_var('custom_user_register') || strpos($_SERVER['REQUEST_URI'], '/registro-de-usuario/' !== false ) ){
+			foreach ($mime_types as $ext => $type) {
+				if(strpos($type, 'image') === false) {
+					unset($mime_types[$ext]);
+				}
+			}
+		}
+		return $mime_types;
 	}
 }
 
