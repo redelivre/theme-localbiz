@@ -47,6 +47,18 @@
 							if(!empty($endereco) && !empty($cidade) ) {
 								$maplink = "$endereco, $numero, $bairro".', '.$address2;
 							}
+							$address_lat = get_post_meta(get_the_ID(), '.google-map-lat', true);
+							$address_lng = get_post_meta(get_the_ID(), '.google-map-lng', true);
+							$formated_address = get_post_meta(get_the_ID(), '.google-map-formated', true);
+							if(! empty($maplink) && (empty($address_lat) || empty($address_lng) || empty($formated_address) ) ) {
+								$google_address = LocalBiz::save_google_address(get_the_ID(), $maplink);
+								if($google_address !== false) {
+									$address_lat = $google_address['lat'];
+									$address_lng = $google_address['lng'];
+									$formated_address = $google_address['formatted_address'];
+								}
+							}
+							
 							$instagram_clientID = false; // TODO next version
 							$content =
 								'[et_pb_section fb_built="1" _builder_version="3.21.4" background_color="#f7f1e8" custom_margin="0px||0px||true" custom_padding="0px||0px||true"][et_pb_row use_custom_width="on" width_unit="off" _builder_version="3.21.4"][et_pb_column type="4_4" _builder_version="3.21.4"][et_pb_text _builder_version="3.21.4"]<p>[localbiz_search]</p>[/et_pb_text][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="3.21.4" background_image="'.(get_stylesheet_directory_uri().'/img/localbiz_single_top@2x.jpg').'" custom_margin="0px||0px||true" custom_padding="0|0px|0|0px|false|false" custom_css_main_element="height:100px;"][et_pb_row _builder_version="3.21.4" use_custom_width="on" width_unit="off" custom_width_percent="72%"][et_pb_column type="4_4" _builder_version="3.21.4"][et_pb_image src="'.$imgurl.'" _builder_version="3.21.4" border_radii="on|100%|100%|100%|100%" border_width_all="4px" border_color_all="#ffffff" box_shadow_style="preset1" box_shadow_blur="12px" max_width="120px" custom_margin="20px||"][/et_pb_image][/et_pb_column][/et_pb_row][/et_pb_section][et_pb_section fb_built="1" _builder_version="3.21.4" custom_padding="0px||"][et_pb_row _builder_version="3.21.4" custom_margin="0px||" custom_padding="0px||"][et_pb_column type="3_5" _builder_version="3.21.4"][et_pb_post_title meta="off" featured_image="off" _builder_version="3.21.4" title_font="||||||||" title_text_color="#ff5500" title_font_size="42px"][/et_pb_post_title][/et_pb_column][et_pb_column type="2_5" _builder_version="3.21.4"][/et_pb_column][/et_pb_row][et_pb_row _builder_version="3.21.4"][et_pb_column type="3_5" _builder_version="3.21.4"][et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Produtos e Serviços</p>
@@ -54,7 +66,7 @@
 		'.(!empty($site) ? '<p><a href="'.$site.'" target="_blank" rel="noopener noreferrer" class="localbiz-single-contact-link"><img src="'.(get_stylesheet_directory_uri().'/img/icon-site.svg').'" alt="" class="alignnone size-full localbiz-single-contact-img" width="24" height="24" /> '.$site.'</a></p>' : '').'
 		'.(!empty($tel) ? '<p><a href="tel:'.$tel.'" target="_blank" rel="noopener noreferrer" class="localbiz-single-contact-link"><img src="'.(get_stylesheet_directory_uri().'/img/icon-telefone.svg').'" alt="" class="alignnone size-full localbiz-single-contact-img" width="24" height="24" /> '.$tel.'</a></p>' : '').'
 		'.(!empty($email) ? '<p><a href="mailto:'.$email.'" target="_blank" rel="noopener noreferrer" class="localbiz-single-contact-link"><img src="'.(get_stylesheet_directory_uri().'/img/icon-email.svg').'" alt="" class="alignnone size-full localbiz-single-contact-img" width="24" height="24" /> '.$email.'</a></p>' : '').'
-		[/et_pb_text][et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Localização</p>[/et_pb_text][et_pb_map _builder_version="3.21.4" address="'.$maplink.'"][et_pb_map_pin title="'.get_the_title().'" pin_address="'.$maplink.'" _builder_version="3.21.4"][/et_pb_map_pin][/et_pb_map][et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Hashtags</p>[/et_pb_text][et_pb_text _builder_version="3.21.4"]<p>[localbiz_hashtags]</p>[/et_pb_text]'.($instagram_clientID ? '[et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Fotos do Instagram</p>[/et_pb_text]' : '').'[/et_pb_column][/et_pb_row][/et_pb_section]
+		[/et_pb_text][et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Localização</p>[/et_pb_text][et_pb_map _builder_version="3.21.4" address="'.$formated_address.'" address_lat="'.$address_lat.'" address_lng="'.$address_lng.'" zoom_level="16"][et_pb_map_pin title="'.get_the_title().'" pin_address="'.$formated_address.'"  pin_address_lat="'.$address_lat.'" pin_address_lng="'.$address_lng.'" _builder_version="3.21.4"][/et_pb_map_pin][/et_pb_map][et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Hashtags</p>[/et_pb_text][et_pb_text _builder_version="3.21.4"]<p>[localbiz_hashtags]</p>[/et_pb_text]'.($instagram_clientID ? '[et_pb_text _builder_version="3.21.4" text_font="||||||||" text_text_color="#ff5500" text_font_size="16px"]<p>Fotos do Instagram</p>[/et_pb_text]' : '').'[/et_pb_column][/et_pb_row][/et_pb_section]
 							';
 							$content .= LocalBiz::get_footer();
 							echo apply_filters('the_content', $content);

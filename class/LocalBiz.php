@@ -719,7 +719,8 @@ class LocalBiz {
 		$tags_html = '';
 		if($tags !== false && ! $tags instanceof WP_Error) {
 			foreach ($tags as $tag) {
-				$tags_html .= '<span class="localbiz-single-tags">#'.$tag->name.'</span>';
+				$link = get_term_link($tag);
+				$tags_html .= '<a href="#"><span class="localbiz-single-tags">#'.$tag->name.'</span></a>';
 			}
 		}
 		return $tags_html;
@@ -730,7 +731,8 @@ class LocalBiz {
 		$html = '';
 		if($pEss !== false && ! $pEss instanceof WP_Error) {
 			for($i = 0; $i < count($pEss) && $i < 5; $i++) {
-				$html .= '<span class="localbiz-produto-e-servico">'.$pEss[$i]->name.'</span>';
+				$link = get_term_link($pEss[$i]);
+				$html .= '<a href="'.$link.'"><span class="localbiz-produto-e-servico">'.$pEss[$i]->name.'</span></a>';
 			}
 		}
 		return $html;
@@ -836,6 +838,62 @@ class LocalBiz {
 			return _('Subcategorias');
 		}
 		return $title;
+	}
+	
+	/**
+	 * Based on https://www.codeofaninja.com/2014/06/google-maps-geocoding-example-php.html
+	 * @param string $address
+	 * @return array|boolean
+	 */
+	public function geocode($address){
+		$api_key = get_option('et_google_api_settings', false);
+		// url encode the address
+		$address = urlencode($address);
+		
+		// google map geocode api url
+		$url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address}&key={$api_key}";
+		
+		// get the json response
+		$resp_json = file_get_contents($url);
+		
+		// decode the json
+		$resp = json_decode($resp_json, true);
+		
+		// response status will be 'OK', if able to geocode given address
+		if($resp['status']=='OK'){
+			
+			// get the important data
+			$lati = isset($resp['results'][0]['geometry']['location']['lat']) ? $resp['results'][0]['geometry']['location']['lat'] : "";
+			$longi = isset($resp['results'][0]['geometry']['location']['lng']) ? $resp['results'][0]['geometry']['location']['lng'] : "";
+			$formatted_address = isset($resp['results'][0]['formatted_address']) ? $resp['results'][0]['formatted_address'] : "";
+			
+			// verify if data is complete
+			if($lati && $longi && $formatted_address){
+				// put the data in the array
+				$data_arr = array(
+					'lat' => $lati,
+					'lng' => $longi,
+					'formatted_address' => $formatted_address
+				);
+				return $data_arr;
+			}else{
+				return false;
+			}
+		}
+		else{
+			echo "<strong>ERROR: {$resp['status']}</strong>";
+			return false;
+		}
+	}
+	public function save_google_address( $post_id, $address) {
+		$address_array = $this->geocode($address);
+		if($address_array !== false) {
+			update_post_meta($post_id, '.google-map-lat', $address_array['lat']);
+			update_post_meta($post_id, '.google-map-lng', $address_array['lng']);
+			update_post_meta($post_id, '.google-map-formated', $address_array['formatted_address']);
+			return $address_array;
+		}
+		return false;
 	}
 }
 
