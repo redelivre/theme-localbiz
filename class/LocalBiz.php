@@ -846,7 +846,9 @@ class LocalBiz {
 	 * @return array|boolean
 	 */
 	public function geocode($address){
-		$api_key = get_option('et_google_api_settings', false);
+		$google_api = get_option('et_google_api_settings', false);
+		if(!is_array($google_api) || !isset($google_api['api_key'])) return false;
+		$api_key = $google_api['api_key'];
 		// url encode the address
 		$address = urlencode($address);
 		
@@ -880,13 +882,14 @@ class LocalBiz {
 				return false;
 			}
 		}
-		else{
-			echo "<strong>ERROR: {$resp['status']}</strong>";
+		else {
+			error_log("<strong>Warning: {$resp['status']}</strong>");
 			return false;
 		}
 	}
-	public function save_google_address( $post_id, $address) {
-		$address_array = $this->geocode($address);
+	public static function save_google_address( $post_id, $address) {
+		$localbiz = self::get_instance();
+		$address_array = $localbiz->geocode($address);
 		if($address_array !== false) {
 			update_post_meta($post_id, '.google-map-lat', $address_array['lat']);
 			update_post_meta($post_id, '.google-map-lng', $address_array['lng']);
