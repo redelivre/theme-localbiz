@@ -56,7 +56,7 @@ div.row {
 .Title-Copy-2 {
   max-width: 540px;
   height: 22px;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
@@ -260,7 +260,7 @@ div.row {
 .Value {
   width: 312.6px;
   height: 19px;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -372,7 +372,7 @@ input.Rectangle-cidade {
 .passo-4 .Lorem-Ipsum {
   width: 250px;
   height: 19px;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -385,7 +385,7 @@ input.Rectangle-cidade {
 .passo-4 .Seu-negcio-possui-f {
   width: 350px;
   height: 19px;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -454,7 +454,7 @@ input.Rectangle-cidade {
 .passo-5 .Check-box-vazio label {
   width: 250px;
   height: 19px;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -522,7 +522,7 @@ input.Rectangle-cidade {
 .passo-6 .-Value {
   width: 240px;
   height: 19px;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -713,7 +713,7 @@ input.Rectangle-cidade {
 input[type="text"].localbiz-search-by-name {
   width: 42%;
   height: 30px;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
@@ -725,7 +725,7 @@ input[type="text"].localbiz-search-by-name {
 .localbiz-search-by-city {
   width: 28%;
   height: 60px;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
@@ -740,7 +740,7 @@ input[type="text"].localbiz-search-by-name {
 .localbiz-search-by-cep {
   width: 11%;
   height: 30px;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
@@ -755,7 +755,7 @@ input[type="text"].localbiz-search-by-name {
   border-top-right-radius: 18px;
   border-bottom-right-radius: 18px;
   background-color: #e95822;
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 14px;
   font-weight: bold;
   font-stretch: normal;
@@ -790,7 +790,7 @@ input[type="text"].localbiz-search-by-name {
     margin-right: 0.5em;
     margin-bottom: 0.1em;
     border-radius: 23px;
-	font-family: OpenSans;
+	font-family: Open Sans;
 	font-size: 12px;
 	font-weight: normal;
 	font-stretch: normal;
@@ -825,7 +825,8 @@ input[type="text"].localbiz-search-by-name {
     margin-right: 0.5em;
 }
 .post-type-archive-localbiz .widget_categories h4 {
-  font-family: OpenSans;
+  font-family: Open Sans;
+  font-variant: regular;
   font-size: 22px;
   font-weight: bold;
   font-stretch: normal;
@@ -835,7 +836,7 @@ input[type="text"].localbiz-search-by-name {
   color: #222a41;
 }
 .post-type-archive-localbiz .widget_categories li {
-  font-family: OpenSans;
+  font-family: Open Sans;
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
@@ -862,7 +863,7 @@ input[type="text"].localbiz-search-by-name {
 	.Title-Copy-2 {
 	  max-width: 540px;
 	  height: 22px;
-	  font-family: OpenSans;
+	  font-family: Open Sans;
 	  font-size: 3vw;
 	  font-weight: normal;
 	  font-stretch: normal;
@@ -911,7 +912,7 @@ input[type="text"].localbiz-search-by-name {
 	    display: block;
 	}
 	.post-type-archive-localbiz .et_pb_section_10, .post-type-archive-localbiz .et_pb_section_1 {
-    	padding: 0;
+    	padding: 3em 0;
 	}
 	.post-type-archive-localbiz .et_pb_image .et_pb_image_wrap {
 		max-width: 60px;
@@ -931,6 +932,7 @@ input[type="text"].localbiz-search-by-name {
 	.post-type-archive-localbiz .widget_categories .widgettitle {
 		font-size: 14px;
 		color: #ff5500;
+		padding-bottom: 0;
 	}
 	.post-type-archive-localbiz .widget_categories .widgettitle::after {
 	    font-family: ETmodules !important;
