@@ -51,7 +51,10 @@ jQuery(document)
                     if (jQuery("#tem_cnpj").length) {
                         jQuery('#tem_cnpj').click(function () {
                             jQuery("#cnpj").prop('disabled', this.checked);
+                            jQuery('#tem_cnpj_sim').prop("checked", !this.checked);
                         });
+                        jQuery("#cnpj").prop('disabled', jQuery('#tem_cnpj').prop('checked'));
+                        jQuery('#tem_cnpj_sim').prop("checked", !jQuery('#tem_cnpj').prop('checked'));
                     }
                     if (jQuery("#produtos").length) {
                         jQuery('#produtos').tagit({
