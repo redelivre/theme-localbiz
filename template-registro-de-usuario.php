@@ -801,7 +801,7 @@
 					$pEs = explode(",", $pEs_text);
 					$pEs_terms = array();
 					foreach($pEs as $produto) {
-						$pterm = get_term_by('name', $produto, 'produtoservico');
+						$pterm = get_term_by('name', esc_attr($produto), 'produtoservico');
 						if($pterm !== false) {
 							$pEs_terms[] = $pterm->term_id;
 						} else {
