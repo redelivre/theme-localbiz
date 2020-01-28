@@ -58,7 +58,8 @@ jQuery(document)
                     }
                     if (jQuery("#produtos").length) {
                         jQuery('#produtos').tagit({
-                            allowSpaces : true
+                            allowSpaces : true,
+                            availableTags: localbiz.produtos
                         });
                         jQuery("input#tel").mask("(00) 00000-00009");
                     }

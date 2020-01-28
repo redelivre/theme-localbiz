@@ -383,9 +383,20 @@ class LocalBiz {
 		wp_enqueue_style('tag-it-theme', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css');
 	}
 	
+	public function get_produtos() {
+		$args = array(
+			'taxonomy' => 'produtoservico',
+			'hide_empty' => false,
+			'fields' => 'names'
+		);
+		return get_terms($args);
+	}
+	
 	public function localize_vars() {
+		$produtos = $this->get_produtos();
 		return array(
-			'stylesheet_directory' => get_stylesheet_directory_uri()
+			'stylesheet_directory' => get_stylesheet_directory_uri(),
+			'produtos' => $produtos
 		);
 	}
 	
