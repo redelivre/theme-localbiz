@@ -655,28 +655,32 @@
 										if($imgurl == false){
 											$imgurl = get_stylesheet_directory_uri().'/img/invalid-name.svg';
 										} ?>
-										<div id="localbiz-perfil-image-wrapper">
-											<div class="img-Oval" style="background-image: url('<?php echo $imgurl; ?>');background-size: auto;">
+										<div>
+											<div class="row col-1">
+												<div id="localbiz-perfil-image-wrapper">
+													<div class="img-Oval" style="background-image: url('<?php echo $imgurl; ?>');background-size: auto;">
+													</div>
+												</div>
 											</div>
-										</div>
-										<div class="row col-1">
-											<div class="row marginb05">
-												<input
-													type="button"
-													class="button button-secondary ct_tax_media_button Title-Copy-4"
-													id="ct_tax_media_button"
-													name="ct_tax_media_button"
-													value="<?php _e( 'Carregar Imagem', 'localbiz' ); ?>"
-												/>
-											</div>
-											<div class="row">
-												<input
-													type="button"
-													class="button button-secondary ct_tax_media_remove Title-Copy-4"
-													id="ct_tax_media_remove"
-													name="ct_tax_media_remove"
-													value="<?php _e( 'Remover Imagem', 'localbiz' ); ?>"
-												/>
+											<div class="row col-1">
+												<div class="row marginb05">
+													<input
+														type="button"
+														class="button button-secondary ct_tax_media_button Title-Copy-4"
+														id="ct_tax_media_button"
+														name="ct_tax_media_button"
+														value="<?php _e( 'Carregar Imagem', 'localbiz' ); ?>"
+													/>
+												</div>
+												<div class="row">
+													<input
+														type="button"
+														class="button button-secondary ct_tax_media_remove Title-Copy-4"
+														id="ct_tax_media_remove"
+														name="ct_tax_media_remove"
+														value="<?php _e( 'Remover Imagem', 'localbiz' ); ?>"
+													/>
+												</div>
 											</div>
 										</div>
 									</div>

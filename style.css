@@ -424,7 +424,10 @@ input.Rectangle-cidade {
 }
 
 .row.col-1 {
-	width: 50%;
+	width: 35%;
+}
+.row.col-2 {
+	width: 49%;
 }
 
 .row .marginb05 {
@@ -553,8 +556,8 @@ input.Rectangle-cidade {
   border: none;
 }
 .passo-6 .img-Oval {
-  width: 80px;
-  height: 80px;
+  width: 150px;
+  height: 150px;
   background-color: #ffd4c5;
   background-repeat: no-repeat;
   background-position: center;
