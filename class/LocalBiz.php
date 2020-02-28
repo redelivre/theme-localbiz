@@ -554,8 +554,11 @@ class LocalBiz {
 	public static function display_error() {
 		if(isset($_REQUEST['error'])) : ?>
 			<div class="row error">
-				<span class="title"><?php _e(sanitize_text_field($_REQUEST['error'])); ?></span>
-				<?php if(isset($_REQUEST['WP_Error']) && WP_DEBUG) : ?>
+				<span class="title"><?php _e(wp_kses_post($_REQUEST['error'])); ?></span><?php 
+				if(isset($_REQUEST['WP_Error']) && isset($_REQUEST['WP_Error']['errors']) && isset($_REQUEST['WP_Error']['errors']['incorrect_password']) ) {
+					echo '<br/>'.wp_kses_post($_REQUEST['WP_Error']['errors']['incorrect_password'][0]);
+				}
+				if(isset($_REQUEST['WP_Error']) && WP_DEBUG) : ?>
 					<pre><?php var_dump($_REQUEST['WP_Error']); ?></pre>
 				<?php endif; ?>
 			</div>

@@ -82,7 +82,6 @@
 						<div class="row">
 							<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
 						</div>
-						<?php LocalBiz::display_error(); ?>
 						<div class="row">
 							<div class="Rectangle-2">
 								<div class="row">
@@ -109,6 +108,7 @@
 								</div>
 							</div>
 						</div>
+						<?php LocalBiz::display_error(); ?>
 						<form class="localbiz_registerform" id="localbiz_registerform2" method="post">
 							<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
 							<?php localbiz_hidden_fields(); ?>
@@ -191,15 +191,22 @@
 		) {
 			$password = sanitize_text_field($_REQUEST['senha']);
 			$email = sanitize_text_field($_REQUEST['email']);
-			if(email_exists($email) ) {
+			if($wp_user_id = email_exists($email) ) {
 				$wpuser = wp_authenticate($email, $password);
 				if($wpuser instanceof WP_User) {
 					$wpuser = wp_set_current_user($wpuser->ID);
 					wp_set_auth_cookie($wpuser->ID);
 					do_action('wp_login', $wpuser->user_login, $wpuser);
 				} else {
+					$sites = get_blogs_of_user($wp_user_id);
 					$_REQUEST['estagio'] = 2;
-					$_REQUEST['error'] = 'Email já cadastrado e/ou senha inválida';
+					$_REQUEST['error'] = 'O seu e-mail já está cadastrado em um dos portais da RedeLivre (abaixo), utilize a mesma senha';
+					$limit = 3;
+					foreach ($sites as $site) {
+						$limit--;
+						$_REQUEST['error'] .= '<br/><a href="'.$site->siteurl.'">'.$site->blogname.'</a>';
+						if($limit < 1) break;
+					}
 					$_REQUEST['WP_Error'] = $wpuser;
 					$url = '/registro-de-usuario' . '?' . http_build_query($_REQUEST);
 					wp_redirect($url);

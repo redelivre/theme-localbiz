@@ -129,11 +129,12 @@ div.row {
 /* passo 2 */
 .passo-2 .Onboarding-2, .passo-3 .Onboarding-2, .passo-4 .Onboarding-2, .passo-5 .Onboarding-2, .passo-6 .Onboarding-2, .passo-7 .Onboarding-2 {
   width: 100%;
-  height: 1024px;
+  min-height: 1024px;
   background-color: #ffffff;
   display: block;
   position: relative;
   float: left;
+  margin-bottom: 4em;
 }
 .passo-2 .Rectangle-2, .passo-3 .Rectangle-2, .passo-4 .Rectangle-2, .passo-5 .Rectangle-2, .passo-6 .Rectangle-2, .passo-7 .Rectangle-2 {
   width: 80%;
@@ -844,6 +845,13 @@ input[type="text"].localbiz-search-by-name {
   line-height: 3.11;
   letter-spacing: normal;
   color: #8a919c;
+}
+
+.error, .error .title {
+    color: red;
+    font-size: 16px;
+    margin: 1em 0 2em;
+	line-height: 2em;
 }
 
 @media only screen and (max-width: 600px) {
