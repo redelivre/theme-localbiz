@@ -56,6 +56,14 @@ jQuery(document)
                         jQuery("#cnpj").prop('disabled', jQuery('#tem_cnpj').prop('checked'));
                         jQuery('#tem_cnpj_sim').prop("checked", !jQuery('#tem_cnpj').prop('checked'));
                     }
+                    if (jQuery("#tem_cep").length) {
+                        jQuery('#tem_cep').click(function () {
+                            jQuery("#cep").prop('disabled', this.checked);
+                            jQuery('#tem_cep_sim').prop("checked", !this.checked);
+                        });
+                        jQuery("#cep").prop('disabled', jQuery('#tem_cep').prop('checked'));
+                        jQuery('#tem_cep_sim').prop("checked", !jQuery('#tem_cep').prop('checked'));
+                    }
                     if (jQuery("#produtos").length) {
                         jQuery('#produtos').tagit({
                             allowSpaces : true,

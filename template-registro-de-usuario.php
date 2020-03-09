@@ -315,12 +315,19 @@
 							<input type="text" id="cep" name="cep" class="Rectangle" value="<?php echo array_key_exists('cep', $_REQUEST) ? sanitize_text_field($_REQUEST['cep']) : ''; ?>" required />
 						</div>
 						<div class="row">
+							<div class="Check-box-vazio">
+								<input type="checkbox" name="tem_cep" id="tem_cep" class="" value="N" >
+								<label for="tem_cep">Não possuo CEP</label>
+							</div>
+							<input type="checkbox" name="tem_cep" id="tem_cep_sim" class="hide" value="S" checked="checked" >
+						</div>
+						<div class="row">
 							<div class="title title-endereco">
 								Endereço
 							</div>
 						</div>
 						<div class="row">
-							<input name="endereco" id="endereco"  class="Rectangle" data-autocomplete-address required>
+							<input name="endereco" id="endereco"  class="Rectangle" data-autocomplete-address>
 						</div>
 						<div class="row">
 							<div class="title-bairro">
@@ -331,8 +338,8 @@
 							</div>
 						</div>
 						<div class="row">
-							<input name="bairro" id="bairro" class="Rectangle-bairro" data-autocomplete-neighborhood required>
-							<input type="number" name="numero" id="numero" class="Rectangle-numero" required >
+							<input name="bairro" id="bairro" class="Rectangle-bairro" data-autocomplete-neighborhood>
+							<input type="number" name="numero" id="numero" class="Rectangle-numero" >
 						</div>
 						<div class="row">
 							<div class="title title-complemento">
@@ -367,16 +374,17 @@
 			if(
 					isset($_REQUEST['post_id']) &&
 					LocalBiz::check_post_owner($_REQUEST['post_id']) &&
-					isset($_REQUEST['cep']) &&
+					(isset($_REQUEST['cep']) || 'N' == sanitize_text_field($_REQUEST['tem_cep']) ) &&
 					isset($_REQUEST['endereco']) &&
 					isset($_REQUEST['numero'])
 			) {
 				$post_id = sanitize_text_field($_REQUEST['post_id']);
-				update_post_meta($post_id, 'cep', sanitize_text_field($_REQUEST['cep']));
-				update_post_meta($post_id, 'endereco', sanitize_text_field($_REQUEST['endereco']));
-				update_post_meta($post_id, 'bairro', sanitize_text_field($_REQUEST['bairro']));
-				update_post_meta($post_id, 'numero', sanitize_text_field($_REQUEST['numero']));
-				update_post_meta($post_id, 'complemento', sanitize_text_field($_REQUEST['complemento']));
+				if(isset($_REQUEST['tem_cep'])) update_post_meta($post_id, 'tem_cep', sanitize_text_field($_REQUEST['tem_cep']));
+				if(isset($_REQUEST['cep'])) update_post_meta($post_id, 'cep', sanitize_text_field($_REQUEST['cep']));
+				if(isset($_REQUEST['endereco'])) update_post_meta($post_id, 'endereco', sanitize_text_field($_REQUEST['endereco']));
+				if(isset($_REQUEST['bairro'])) update_post_meta($post_id, 'bairro', sanitize_text_field($_REQUEST['bairro']));
+				if(isset($_REQUEST['numero'])) update_post_meta($post_id, 'numero', sanitize_text_field($_REQUEST['numero']));
+				if(isset($_REQUEST['complemento'])) update_post_meta($post_id, 'complemento', sanitize_text_field($_REQUEST['complemento']));
 				update_post_meta($post_id, 'estado', sanitize_text_field($_REQUEST['estado']));
 				update_post_meta($post_id, 'cidade', sanitize_text_field($_REQUEST['cidade']));
 				update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
@@ -707,8 +715,8 @@
 									Produtos e Serviços
 								</div>
 							</div>
-							<div class="row">
-								<input name="produtos" id="produtos"  class="Rectangle" value="<?php echo array_key_exists('produtos', $_REQUEST) ? sanitize_text_field($_REQUEST['produtos']) : ''; ?>" >
+							<div class="row" title="Inserir apenas palavras chaves para facilitar a localização do produto ou serviço">
+								<input name="produtos" id="produtos" class="Rectangle" value="<?php echo array_key_exists('produtos', $_REQUEST) ? sanitize_text_field($_REQUEST['produtos']) : ''; ?>" >
 							</div>
 							<div class="row">
 								<div class="subtitle-2">

@@ -37,6 +37,7 @@ class LocalBiz {
 		add_filter('widget_categories_args', array($this, 'widget_categories_args') );
 		add_filter('widget_title', array($this, 'widget_title'), 10, 3 );
 		add_filter('mime_types', array($this, 'mime_types'));
+		add_action('pre_get_posts', array($this, 'allow_pending_listings'));
 	}
 	public function enqueue_styles() {
 		wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
@@ -156,12 +157,20 @@ class LocalBiz {
 			<input type="text" id="cep" name="cep" class="Rectangle" value="<?php echo get_post_meta($post_id, 'cep', true); ?>" required />
 		</div>
 		<div class="row">
+			<div class="Check-box-vazio">
+				<input type="checkbox" name="tem_cep" id="tem_cep" class=""
+					value="N" <?php echo get_post_meta($post_id, 'tem_cep', true) == 'N' ? 'checked="checked"' : ''; ?>> <label for="tem_cep">Não possuo CEP</label>
+			</div>
+			<input type="checkbox" name="tem_cep" id="tem_cep_sim" class="hide" style="display: none;"
+				value="S" <?php echo get_post_meta($post_id, 'tem_cep', true) != 'N' ? 'checked="checked"' : ''; ?>>
+		</div>
+		<div class="row">
 			<div class="title title-endereco">
 				Endereço
 			</div>
 		</div>
 		<div class="row">
-			<input name="endereco" id="endereco"  class="Rectangle" data-autocomplete-address value="<?php echo get_post_meta($post_id, 'endereco', true); ?>" required>
+			<input name="endereco" id="endereco"  class="Rectangle" data-autocomplete-address value="<?php echo get_post_meta($post_id, 'endereco', true); ?>">
 		</div>
 		<div class="row">
 			<div class="title-bairro">
@@ -172,8 +181,8 @@ class LocalBiz {
 			</div>
 		</div>
 		<div class="row">
-			<input name="bairro" id="bairro" class="Rectangle-bairro" data-autocomplete-neighborhood value="<?php echo get_post_meta($post_id, 'bairro', true); ?>" required>
-			<input type="number" name="numero" id="numero" class="Rectangle-numero" value="<?php echo get_post_meta($post_id, 'numero', true); ?>" required >
+			<input name="bairro" id="bairro" class="Rectangle-bairro" data-autocomplete-neighborhood value="<?php echo get_post_meta($post_id, 'bairro', true); ?>" >
+			<input type="number" name="numero" id="numero" class="Rectangle-numero" value="<?php echo get_post_meta($post_id, 'numero', true); ?>"  >
 		</div>
 		<div class="row">
 			<div class="title title-complemento">
@@ -612,7 +621,11 @@ class LocalBiz {
 			return $post_id;
 		}
 		update_post_meta($post_id, 'nome-responsavel', sanitize_title($_POST['nome-responsavel']));
-		update_post_meta($post_id, 'cep', sanitize_text_field($_POST['cep']));
+		$tem_cep = sanitize_text_field($_POST['tem_cep']);
+		update_post_meta($post_id, 'tem_cep', $tem_cep);
+		if($tem_cep == 'S') {
+			update_post_meta($post_id, 'cep', sanitize_text_field($_POST['cep']));
+		}
 		update_post_meta($post_id, 'endereco', sanitize_text_field($_POST['endereco']));
 		update_post_meta($post_id, 'bairro', sanitize_text_field($_POST['bairro']));
 		update_post_meta($post_id, 'numero', sanitize_text_field($_POST['numero']));
@@ -932,6 +945,14 @@ class LocalBiz {
 			}
 		}
 		return $mime_types;
+	}
+	public function allow_pending_listings($qry) {
+		if(is_user_logged_in() && isset($_REQUEST['p']) ){
+			$edit_data = get_post(intval($_REQUEST['p']));
+			if (!is_admin() && $edit_data->post_author == get_current_user_id()) {
+				$qry->set('post_status', array('publish','pending'));
+			}
+		}
 	}
 }
 
