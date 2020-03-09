@@ -857,6 +857,21 @@ input[type="text"].localbiz-search-by-name {
 	line-height: 2em;
 }
 
+.single-localbiz .localbiz-perfil-img img {
+	position: absolute;
+	right: 0;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+
+.single-localbiz .localbiz-perfil-img .et_pb_image_wrap {
+	height: 150px;
+	width: 150px;
+	background-color: #fff;
+}
+
 @media only screen and (max-width: 600px) {
   .Title-Copy {
 	  max-width: 730px;
