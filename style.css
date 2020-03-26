@@ -15,7 +15,7 @@
 div.row {
     width: 100%;
 }
-.Onboarding, .passo-2, .passo-3, .passo-4, .passo-5, .passo-6, .passo-7 {
+.Onboarding, .passo-2, .passo-2, .passo-3, .passo-4, .passo-5, .passo-6, .passo-7 {
   width: 100%;
   height: 1024px;
   background-color: #ffffff;
@@ -144,7 +144,6 @@ div.row {
   padding-top: 2em;
 }
 .passo-2 .Title-Copy, .passo-3 .Title-Copy, .passo-4 .Title-Copy, .passo-5 .Title-Copy, .passo-6 .Title-Copy, .passo-7 .Title-Copy {
-  width: 288px;
   height: 31px;
   font-family: Poppins;
   font-size: 22px;
@@ -199,7 +198,6 @@ div.row {
   vertical-align: middle;
 }
 .passo-2 .Title-Copy-2, .passo-3 .Title-Copy-2, .passo-4 .Title-Copy-2, .passo-5 .Title-Copy-2, .passo-6 .Title-Copy-2, .passo-7 .Title-Copy-2 {
-  width: 165px;
   height: 25px;
   font-family: Poppins;
   font-size: 18px;
@@ -253,9 +251,6 @@ div.row {
   color: #ffffff;
   padding: 0.6em 0;
 }
-
-
-
 
 /* passo 3 */
 .Value {
@@ -572,7 +567,7 @@ input.Rectangle-cidade {
   object-fit: contain;
   background-color: #f05822;
 }
-.passo-6 textarea, .passo-6 .tagit {
+.passo-6 textarea, .passo-6 .tagit, .consumidor.passo-2 .tagit {
   width: 350px;
   height: 96px;
   border-radius: 6px;
