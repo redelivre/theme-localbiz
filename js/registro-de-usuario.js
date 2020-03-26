@@ -67,11 +67,17 @@ jQuery(document)
                     if (jQuery("#produtos").length) {
                         jQuery('#produtos').tagit({
                             allowSpaces : true,
-                            availableTags: localbiz.produtos
+                            availableTags: localbiz.produtos,
+                            maxLength: 30,
+                            onTagLimitExceeded: function (event, ui) {
+                                if (ui.tagLabel.length > 30) {
+                                    alert("Cada item pode ter no máximo 30 caracteres");
+                                }
+                            }
                         });
-                        jQuery("input#tel").mask("(00) 00000-00009");
+                        jQuery("input.telefone").mask("(00) 00000-00009");
                     }
-                    if (jQuery("#produtos").length) {
+                    if (jQuery("input#site").length) {
                         jQuery("input#site").change(function() {
                             if (!/^https*:\/\//.test(this.value)) {
                                 this.value = "http://" + this.value;
