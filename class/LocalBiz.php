@@ -383,7 +383,15 @@ class LocalBiz {
 		wp_enqueue_script ( 'cepjs', get_stylesheet_directory_uri() . '/js/jquery.autocomplete-address.min.js', array('jquery'), '1.0', true);
 		wp_enqueue_script('mask', get_stylesheet_directory_uri() . '/js/jquery.mask.min.js', array('jquery'), '', true);
 		wp_enqueue_script('localbiz-registro', get_stylesheet_directory_uri() . '/js/registro-de-usuario.js', array('jquery'), '', true);
-		if(is_user_logged_in() && isset($_REQUEST['estagio']) && $_REQUEST['estagio'] == 6) {
+		if(
+				is_user_logged_in() &&
+				isset($_REQUEST['estagio']) && (
+						$_REQUEST['estagio'] == 6 || (
+								$_REQUEST['estagio'] == 2 &&
+								$_REQUEST['tipo-registro'] == 'consumidor'
+						)
+				)
+		) {
 			wp_enqueue_media();
 			wp_enqueue_script('tag-it', get_stylesheet_directory_uri() . '/js/tag-it.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-autocomplete'), '', true);
 		}
