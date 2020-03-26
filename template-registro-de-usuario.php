@@ -28,8 +28,11 @@
 		<?php
 		endif;
 	}
-?>
-<?php switch ($stage) { 
+	$tipo_registro = array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : false;
+	if($tipo_registro == false && $stage > 1) {
+		wp_redirect('/registro-de-usuario');
+	}
+	switch ($stage) { 
 	case 1: ?>
 		<div class="Onboarding">
 			<div class="row">
@@ -71,13 +74,9 @@
 		</div><?php
 	break;
 	case 2:
-		$tipo_registro = array_key_exists('tipo-registro', $_REQUEST) ? sanitize_text_field( $_REQUEST['tipo-registro'] ) : false;
-		if($tipo_registro == false) {
-			wp_redirect('/registro-de-usuario');
-		}
 		switch($tipo_registro) {
 			case 'empresa':?>
-				<div class="passo-2">
+				<div class="<?php echo $tipo_registro; ?> passo-2">
 					<div class="Onboarding-2">
 						<div class="row">
 							<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
@@ -176,6 +175,105 @@
 					</div>
 				</div><?php
 			break;
+			case 'consumidor':?>
+				<div class="<?php echo $tipo_registro; ?> passo-2">
+					<div class="Onboarding-2">
+						<div class="row">
+							<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
+						</div>
+						<div class="row">
+							<div class="Rectangle-2">
+								<div class="row">
+									<div class="Title-Copy">
+										Conheça os produtores Locais
+									</div>
+								</div>
+								<div class="row">
+									<div class="Oval">
+										<span>1</span>
+									</div>
+									<div class="Oval-Copy">
+										<span>2</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<?php LocalBiz::display_error(); ?>
+						<form class="localbiz_registerform" id="localbiz_registerform2" method="post">
+							<?php wp_nonce_field('localbiz_registro_action', 'localbiz_registro_nonce_field'); ?>
+							<?php localbiz_hidden_fields(); ?>
+							<div class="row">
+								<div class="Title-Copy-2">
+									Dados do consumidor
+								</div>
+							</div>
+							<?php if(! is_user_logged_in() ) : ?>
+								<div class="row">
+									<div class="title">
+										Nome
+									</div>
+								</div>
+								<div class="row">
+									<input type="text" name="nome-comsumidor" class="Rectangle" value="<?php echo array_key_exists('nome-comsumidor', $_REQUEST) ? sanitize_text_field($_REQUEST['nome-comsumidor']) : ''; ?>" required />
+								</div>
+								<div class="row">
+									<div class="title">
+										Email
+									</div>
+								</div>
+								<div class="row">
+									<input type="email" name="email" class="Rectangle" value="<?php echo array_key_exists('email', $_REQUEST) ? sanitize_text_field($_REQUEST['email']) : ''; ?>" required />
+								</div>
+								<div class="row">
+									<div class="title">
+										Senha
+									</div>
+								</div>
+								<div class="row">
+									<input type="password" name="senha" class="Rectangle" value="" required />
+								</div>
+								<div class="row">
+									<div class="title">
+										Repetir Senha
+									</div>
+								</div>
+								<div class="row">
+									<input type="password" name="senha2" class="Rectangle" value="" required />
+								</div>
+								<div class="row">
+									<div class="title">
+										Captcha
+									</div>
+								</div>
+								<?php if(is_object($wpc_captcha)) : ?>
+									<div class="row">
+										<?php
+											$wpc_captcha->wpc_display_captcha();
+										?>
+									</div>
+								<?php endif; ?>
+							<?php endif; ?>
+							<div class="row">
+								<div class="title">
+									Telefone para contato
+								</div>
+							</div>
+							<div class="row">
+								<input type="tel" name="telefone-contato" class="Rectangle telefone" value="<?php echo array_key_exists('telefone-contato', $_REQUEST) ? sanitize_text_field($_REQUEST['telefone-contato']) : ''; ?>" />
+							</div>
+							<div class="row">
+								<div class="title">
+									Produtos e Serviços de Interesse
+								</div>
+							</div>
+							<div class="row" title="Inserir apenas palavras chaves para facilitar a localização do produto ou serviço">
+								<input name="produtos" id="produtos" class="Rectangle" value="<?php echo array_key_exists('produtos', $_REQUEST) ? sanitize_text_field($_REQUEST['produtos']) : ''; ?>" >
+							</div>
+							<?php submit_template(); ?>
+						</form>
+					</div>
+				</div><?php
+			break;
 		}
 	break;
 	case 3:
@@ -243,130 +341,172 @@
 			wp_redirect($url);
 		}
 		if(is_user_logged_in()) {
-			$post_id = false;
-			$post = false;
-			if(isset($_REQUEST['post_id'])) {
-				$post_id = intval(sanitize_text_field($_REQUEST['post_id']));
-				$post_tmp = get_post($post_id);
-				if(get_current_user_id() == $post_tmp->post_author) {
-					$post = $post_tmp;
-				} else {
-					$_REQUEST['estagio'] = 2;
-					$_REQUEST['error'] = 'Você não pode editar esse post';
-					unset($_REQUEST['post_id']);
-					$url = '/registro-de-usuario' . '?' . http_build_query($_REQUEST);
-					wp_redirect($url);
-				}
-			} else {
-				$post = array();
-				$post['post_title'] = sanitize_text_field($_REQUEST['nome-negocio']);
-				$post['post_type'] = 'localbiz';
-				$post['post_status'] = 'pending';
-				$post_id = wp_insert_post($post);
-				update_post_meta($post_id, 'nome-responsavel', sanitize_text_field($_REQUEST['nome-responsavel']));
-				update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
+			switch($tipo_registro) {
+				case 'empresa':
+					$post_id = false;
+					$post = false;
+					if(isset($_REQUEST['post_id'])) {
+						$post_id = intval(sanitize_text_field($_REQUEST['post_id']));
+						$post_tmp = get_post($post_id);
+						if(get_current_user_id() == $post_tmp->post_author) {
+							$post = $post_tmp;
+						} else {
+							$_REQUEST['estagio'] = 2;
+							$_REQUEST['error'] = 'Você não pode editar esse post';
+							unset($_REQUEST['post_id']);
+							$url = '/registro-de-usuario' . '?' . http_build_query($_REQUEST);
+							wp_redirect($url);
+						}
+					} else {
+						$post = array();
+						$post['post_title'] = sanitize_text_field($_REQUEST['nome-negocio']);
+						$post['post_type'] = 'localbiz';
+						$post['post_status'] = 'pending';
+						$post_id = wp_insert_post($post);
+						update_post_meta($post_id, 'nome-responsavel', sanitize_text_field($_REQUEST['nome-responsavel']));
+						update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
+					}
+					$_REQUEST['post_id'] = $post_id; ?>
+					<div class="<?php echo $tipo_registro; ?> passo-3">
+						<div class="Onboarding-2">
+							<div class="row">
+								<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
+							</div>
+							<?php LocalBiz::display_error(); ?>
+							<div class="row">
+								<div class="Rectangle-2">
+									<div class="row">
+										<div class="Title-Copy">
+											Cadastrando seu negócio
+										</div>
+									</div>
+									<div class="row">
+										<div class="Oval-Copy">
+											<span>1</span>
+										</div>
+										<div class="Oval">
+											<span>2</span>
+										</div>
+										<div class="Oval-Copy">
+											<span>3</span>
+										</div>
+										<div class="Oval-Copy">
+											<span>4</span>
+										</div>
+										<div class="Oval-Copy">
+											<span>5</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<form class="localbiz_registerform" id="localbiz_registerform2" method="post">
+								<?php localbiz_hidden_fields(); ?>
+								<div class="row">
+									<div class="Title-Copy-2">
+										Sua Região
+									</div>
+								</div>
+								<div class="row">
+									<div class="title">
+										CEP do seu negócio
+									</div>
+								</div>
+								<div class="row">
+									<input type="text" id="cep" name="cep" class="Rectangle" value="<?php echo array_key_exists('cep', $_REQUEST) ? sanitize_text_field($_REQUEST['cep']) : ''; ?>" required />
+								</div>
+								<div class="row">
+									<div class="Check-box-vazio">
+										<input type="checkbox" name="tem_cep" id="tem_cep" class="" value="N" >
+										<label for="tem_cep">Não possuo CEP</label>
+									</div>
+									<input type="checkbox" name="tem_cep" id="tem_cep_sim" class="hide" value="S" checked="checked" >
+								</div>
+								<div class="row">
+									<div class="title title-endereco">
+										Endereço
+									</div>
+								</div>
+								<div class="row">
+									<input name="endereco" id="endereco"  class="Rectangle" data-autocomplete-address>
+								</div>
+								<div class="row">
+									<div class="title-bairro">
+										Bairro
+									</div>
+									<div class="title-numero">
+										Número
+									</div>
+								</div>
+								<div class="row">
+									<input name="bairro" id="bairro" class="Rectangle-bairro" data-autocomplete-neighborhood>
+									<input type="number" name="numero" id="numero" class="Rectangle-numero" >
+								</div>
+								<div class="row">
+									<div class="title title-complemento">
+										Complemento
+									</div>
+								</div>
+								<div class="row">
+									<input name="complemento" id="complemento" class="Rectangle" >
+								</div>
+								<div class="row">
+									<div class="title-estado">
+										Estado
+									</div>
+									<div class="title-cidade">
+										Cidade
+									</div>
+								</div>
+								<div class="row">
+									<input name="estado" id="estado" class="Rectangle-estado" data-autocomplete-state required>
+									<input name="cidade" id="cidade" class="Rectangle-cidade" data-autocomplete-city required>
+								</div>
+								<?php submit_template(); ?>
+							</form>
+						</div>
+					</div>
+					<?php
+				break;
+				case 'consumidor':
+					if(isset($_REQUEST['telefone-contato'])) update_user_meta(get_current_user_id(), 'telefone-contato', sanitize_text_field($_REQUEST['telefone-contato']));
+					if(isset($_REQUEST['produtos']) && ! empty($_REQUEST['produtos'])) {
+						$pEs_text = sanitize_text_field($_REQUEST['produtos']);
+						$pEs = explode(",", $pEs_text);
+						$pEs_terms = array();
+						foreach($pEs as $produto) {
+							$pterm = get_term_by('name', esc_attr($produto), 'produtoservico');
+							if($pterm !== false) {
+								$pEs_terms[] = $pterm->term_id;
+							} else {
+								$pterm = wp_insert_term($produto, 'produtoservico');
+								if(! $pterm instanceof WP_Error) {
+									$pEs_terms[] = $pterm['term_id'];
+								}
+							}
+						}
+						update_user_meta( get_current_user_id(), '.localbiz-produtoservico', $pEs_terms );
+					}?>
+					<div class="<?php echo $tipo_registro; ?> passo-7 Cadastro-Efetuado">
+						<div class="Rectangle">
+							<div class="row">
+								<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
+							</div>
+							<?php LocalBiz::display_error(); ?>
+							<div class="row">
+								<!-- svg -->
+								<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/noun-check-1934251.svg"
+			     					class="noun_Check_1934251">
+							</div>
+							<div class="row">
+								<div class="Title-Copy-2">
+									Cadastro Realizado 
+									com Sucesso!
+								</div>
+							</div>
+						</div>
+					</div><?php
+				break;
 			}
-			$_REQUEST['post_id'] = $post_id; ?>
-			<div class="passo-3">
-				<div class="Onboarding-2">
-					<div class="row">
-						<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
-					</div>
-					<?php LocalBiz::display_error(); ?>
-					<div class="row">
-						<div class="Rectangle-2">
-							<div class="row">
-								<div class="Title-Copy">
-									Cadastrando seu negócio
-								</div>
-							</div>
-							<div class="row">
-								<div class="Oval-Copy">
-									<span>1</span>
-								</div>
-								<div class="Oval">
-									<span>2</span>
-								</div>
-								<div class="Oval-Copy">
-									<span>3</span>
-								</div>
-								<div class="Oval-Copy">
-									<span>4</span>
-								</div>
-								<div class="Oval-Copy">
-									<span>5</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<form class="localbiz_registerform" id="localbiz_registerform2" method="post">
-						<?php localbiz_hidden_fields(); ?>
-						<div class="row">
-							<div class="Title-Copy-2">
-								Sua Região
-							</div>
-						</div>
-						<div class="row">
-							<div class="title">
-								CEP do seu negócio
-							</div>
-						</div>
-						<div class="row">
-							<input type="text" id="cep" name="cep" class="Rectangle" value="<?php echo array_key_exists('cep', $_REQUEST) ? sanitize_text_field($_REQUEST['cep']) : ''; ?>" required />
-						</div>
-						<div class="row">
-							<div class="Check-box-vazio">
-								<input type="checkbox" name="tem_cep" id="tem_cep" class="" value="N" >
-								<label for="tem_cep">Não possuo CEP</label>
-							</div>
-							<input type="checkbox" name="tem_cep" id="tem_cep_sim" class="hide" value="S" checked="checked" >
-						</div>
-						<div class="row">
-							<div class="title title-endereco">
-								Endereço
-							</div>
-						</div>
-						<div class="row">
-							<input name="endereco" id="endereco"  class="Rectangle" data-autocomplete-address>
-						</div>
-						<div class="row">
-							<div class="title-bairro">
-								Bairro
-							</div>
-							<div class="title-numero">
-								Número
-							</div>
-						</div>
-						<div class="row">
-							<input name="bairro" id="bairro" class="Rectangle-bairro" data-autocomplete-neighborhood>
-							<input type="number" name="numero" id="numero" class="Rectangle-numero" >
-						</div>
-						<div class="row">
-							<div class="title title-complemento">
-								Complemento
-							</div>
-						</div>
-						<div class="row">
-							<input name="complemento" id="complemento" class="Rectangle" >
-						</div>
-						<div class="row">
-							<div class="title-estado">
-								Estado
-							</div>
-							<div class="title-cidade">
-								Cidade
-							</div>
-						</div>
-						<div class="row">
-							<input name="estado" id="estado" class="Rectangle-estado" data-autocomplete-state required>
-							<input name="cidade" id="cidade" class="Rectangle-cidade" data-autocomplete-city required>
-						</div>
-						<?php submit_template(); ?>
-					</form>
-				</div>
-			</div>
-				
-			<?php
 		}
 	break;
 	case 4:
@@ -390,7 +530,7 @@
 				update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
 			}
 		?>
-			<div class="passo-4">
+			<div class="<?php echo $tipo_registro; ?> passo-4">
 				<div class="Onboarding-2">
 					<div class="row">
 						<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
@@ -499,7 +639,7 @@
 					update_post_meta($post_id, 'estagio', sanitize_text_field($_REQUEST['estagio']));
 			}
 			?>
-			<div class="passo-5">
+			<div class="<?php echo $tipo_registro; ?> passo-5">
 				<div class="Onboarding-2">
 					<div class="row">
 						<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
@@ -596,7 +736,7 @@
 				if($cat_id > 0) $cats[] = $cat_id;
 				if($subcat_id > 0) $cats[] = $subcat_id;
 				if(!empty($cats)) wp_set_post_terms($post_id, $cats, 'category');?>
-				<div class="passo-6">
+				<div class="<?php echo $tipo_registro; ?> passo-6">
 					<div class="Onboarding-2">
 						<div class="row">
 							<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
@@ -729,7 +869,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<input type="tel" name="tel" id="tel"  class="Rectangle" value="<?php echo array_key_exists('tel', $_REQUEST) ? sanitize_text_field($_REQUEST['tel']) : ''; ?>" >
+								<input type="tel" name="tel" id="tel"  class="Rectangle telefone" value="<?php echo array_key_exists('tel', $_REQUEST) ? sanitize_text_field($_REQUEST['tel']) : ''; ?>" >
 							</div>
 							<div class="row">
 								<div class="title">
@@ -785,6 +925,7 @@
 	break;
 	case 7:
 		if(is_user_logged_in()) {
+			$post_id = false;
 			if(
 				isset($_REQUEST['post_id']) &&
 				LocalBiz::check_post_owner($_REQUEST['post_id']) &&
@@ -833,7 +974,7 @@
 					wp_set_post_terms($post_id, $pEs_terms, 'produtoservico');
 				}
 			}?>
-			<div class="passo-7 Cadastro-Efetuado">
+			<div class="<?php echo $tipo_registro; ?> passo-7 Cadastro-Efetuado">
 				<div class="Rectangle">
 					<div class="row">
 						<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/group-30.svg" class="Group-30">
@@ -848,6 +989,11 @@
 						<div class="Title-Copy-2">
 							Cadastro Realizado 
 							com Sucesso!
+						</div>
+					</div>
+					<div class="row">
+						<div class="Title-Copy-2">
+							<a href="<?php echo get_preview_post_link(get_post($post_id)); ?>">Veja como ficará o seu LocalBiz</a>
 						</div>
 					</div>
 				</div>
