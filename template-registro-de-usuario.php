@@ -973,6 +973,7 @@
 					}
 					wp_set_post_terms($post_id, $pEs_terms, 'produtoservico');
 				}
+				LocalBiz::alert_admin_email($post_id, get_post($post_id));
 			}?>
 			<div class="<?php echo $tipo_registro; ?> passo-7 Cadastro-Efetuado">
 				<div class="Rectangle">

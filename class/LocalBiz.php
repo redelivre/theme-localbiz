@@ -2,6 +2,7 @@
 class LocalBiz {
 	public function __construct() {
 		add_action('init', array($this, 'init'));
+		add_action('admin_init', array($this, 'admin_init'));
 		self::$instance = $this;
 	}
 	
@@ -39,6 +40,10 @@ class LocalBiz {
 		add_filter('mime_types', array($this, 'mime_types'));
 		add_action('pre_get_posts', array($this, 'allow_pending_listings'));
 	}
+	public function admin_init() {
+		//add_action( 'publish_localbiz', 'alert_admin_email', 10, 2 );
+	}
+	
 	public function enqueue_styles() {
 		wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 	}
@@ -961,6 +966,61 @@ class LocalBiz {
 				$qry->set('post_status', array('publish','pending'));
 			}
 		}
+	}
+	public static function alert_admin_email( $post_id, $post ) {
+		$adminemail = get_option( 'admin_email' );
+		setup_postdata($post);
+		$yoursubject = 'Novo LocalBiz: '.get_the_title();
+		
+		$terms = get_the_terms( get_the_ID() , 'category' );
+		$entry_terms = '';
+		if ( ! empty( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$entry_terms .= $term->name . ', ';
+			}
+			$entry_terms = rtrim( $entry_terms, ', ' );
+		}
+		$cat = $terms;
+		$terms = get_the_terms( get_the_ID() , 'produtoservico' );
+		$entry_terms = '';
+		if ( ! empty( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$entry_terms .= $term->name . ', ';
+			}
+			$entry_terms = rtrim( $entry_terms, ', ' );
+		}
+		$produtoservico = $terms;
+		
+		$yourmessage = 
+			'Nome do Negocio: '.get_the_title()."\n".
+			'nome-responsavel: '.get_post_meta($post_id, 'nome-responsavel', true)."\n".
+			'Descrição: '.get_the_content()."\n".
+			'Resumo: '. get_the_excerpt()."\n".
+			'estagio do cadastro: '.get_post_meta($post_id, 'estagio', true)."\n".
+			'Tem CEP: '.get_post_meta($post_id, 'tem_cep', true)."\n".
+			'CEP: '.get_post_meta($post_id, 'cep', true)."\n".
+			'Endereço: '.get_post_meta($post_id, 'endereco', true)."\n".
+			'Bairro: '.get_post_meta($post_id, 'bairro', true)."\n".
+			'Número: '.get_post_meta($post_id, 'numero', true)."\n".
+			'Complemento: '.get_post_meta($post_id, 'complemento', true)."\n".
+			'Estado: '.get_post_meta($post_id, 'estado', true)."\n".
+			'Cidade: '.get_post_meta($post_id, 'cidade', true)."\n".
+			'Fins Lucrativos: '.get_post_meta($post_id, 'fins', true)."\n".
+			'Tamanho: '.get_post_meta($post_id, 'tamanho', true)."\n".
+			'Tem CNPJ: '.get_post_meta($post_id, 'tem_cnpj', true)."\n".
+			'CNPJ: '.get_post_meta($post_id, 'cnpj', true)."\n".
+			'Razão Social: '.get_post_meta($post_id, 'razao', true)."\n".
+			'Telefone: '.get_post_meta($post_id, 'tel', true)."\n".
+			'Email: '.get_post_meta($post_id, 'email_localbiz', true)."\n".
+			'Site: '.get_post_meta($post_id, 'site', true)."\n".
+			'Instagram: '.get_post_meta($post_id, 'insta', true)."\n".
+			'Facebook: '.get_post_meta($post_id, 'facebook', true)."\n".
+			'Linkedin: '.get_post_meta($post_id, 'linkedin', true)."\n".
+			'Categorias: '.$cat."\n".
+			'Produto e serviços: '.$produtoservico."\n"
+		;
+		wp_mail( $adminemail, $yoursubject, $yourmessage );
+		wp_reset_postdata();
 	}
 }
 
